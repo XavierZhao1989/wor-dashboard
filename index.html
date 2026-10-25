@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Watcher of Realms · 专属养成与战术指挥中心 (Lv40 Day5+)</title>
+<link rel="stylesheet" href="img/frames/rarity.css">
 <style>
   :root {
     --bg-main: #0b0e14;
@@ -371,10 +372,174 @@
     color: var(--text-muted);
   }
 
+  .unverified {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.16);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    white-space: nowrap;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+
+  .unverified-note {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin: 0 0 10px;
+  }
+
+  .filter-note {
+    margin-top: 12px;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+  }
+
+  .site-footer {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .site-footer div + div { margin-top: 4px; }
+
+  .hero-ava {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center top;
+    vertical-align: middle;
+    margin: 0 4px 0 0;
+    flex: 0 0 auto;
+    background: #1a2130;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .hero-ava-fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-gold);
+    letter-spacing: 0;
+  }
+
+  .pill:has(.hero-ava) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 4px;
+  }
+
+  .pill:has(.hero-ava) .hero-ava { margin: 0; }
+
+  .hero-slot {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    vertical-align: middle;
+    margin: 0 4px 0 0;
+    border-radius: 8px;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .hero-slot .hero-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .hero-slot .hero-ava {
+    position: absolute;
+    top: 13%;
+    left: 13%;
+    width: 74%;
+    height: 74%;
+    margin: 0;
+    border: 0;
+    border-radius: 2px;
+    object-fit: cover;
+    object-position: center 18%;
+  }
+
+  .pill:has(.hero-slot) .hero-slot { margin: 0; }
+
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin: 0 6px 0 3px;
+    vertical-align: -1px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .stars img {
+    width: 16px;
+    height: 14px;
+    display: block;
+    flex: 0 0 auto;
+    object-fit: cover;
+    filter: drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .aw { font-size: 0.72rem; vertical-align: 1px; }
+
+  .class-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    margin-right: 4px;
+    flex: 0 0 auto;
+  }
+
+  .filter-bar .btn { display: inline-flex; align-items: center; }
+  .filter-bar .btn.active .class-icon { filter: brightness(0); }
+
   @media (max-width: 900px) {
     .sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
     body { flex-direction: column; }
     .main-content { margin-left: 0; padding: 18px; }
+    .hero-ava { width: 28px; height: 28px; }
+    .hero-slot { width: 28px; height: 28px; flex-basis: 28px; }
+    .stars img { width: 14px; height: 12px; }
   }
 </style>
 </head>
@@ -398,7 +563,7 @@
   <a class="nav-link" href="#sec-wishlist">🌟 Fastidious 愿望单 & BP秘密</a>
 
   <div class="nav-group-title">装备与神器 (Fastidious校验)</div>
-  <a class="nav-link" href="#sec-gear">🛡️ 装备 Manage Plan & 导入码</a>
+  <a class="nav-link" href="#sec-gear">🛡️ 装备 Manage Plan（四规则）</a>
   <a class="nav-link" href="#sec-artifacts">🏺 神器库存 & 真实评级修正 <span class="nav-badge">已纠偏</span></a>
 
   <div class="nav-group-title">副本、编队与运营</div>
@@ -418,7 +583,7 @@
       <div>
         <h2>Watcher of Realms · 新手养成与 Fastidious 权威数据手册</h2>
         <p style="color: var(--text-muted); font-size: 0.86rem; margin-top: 4px;">
-          账号里程碑：Lv40 已达成 · <strong>Olague (4★史诗坦)</strong> & <strong>Ferssi (5★传说奶)</strong> 已到手 · Arrival of Heroes 榜一结算
+          账号里程碑：Lv40 已达成 · <strong>Olague (<span class="stars" title="4★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">4★</span></span>史诗坦)</strong> & <strong>Ferssi (<span class="stars" title="5★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>传说奶)</strong> 已到手 · Arrival of Heroes 榜一结算
         </p>
       </div>
       <button class="btn btn-outline" onclick="resetChecklists()">🔄 重置本地任务勾选</button>
@@ -472,10 +637,8 @@
           <span class="pill pill-purple">狗粮规划</span>
         </div>
         <ul>
-          <li><strong>三大 6★P6 射手已就位</strong>：<strong>Hatssut (6★P6 A1)</strong>、<strong>Hex (6★P6 A1)</strong>、<strong>Idril (6★P6 A1)</strong> 已经全部毕业！</li>
-          <li><strong>下一批 6★ 顺序</strong>：优先 <strong>Baron (已满觉 A5)</strong> $
-ightarrow$ <strong>Hollow / Vortex / Ferssi</strong> $
-ightarrow$ <strong>Olague</strong> 接在后面。</li>
+          <li><strong>三大 6★P6 射手已就位</strong>：<strong>Hatssut (<span class="stars" title="6★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span>)</strong>、<strong>Hex (<span class="stars" title="6★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span>)</strong>、<strong>Idril (<span class="stars" title="6★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span>)</strong> 已经全部毕业！</li>
+          <li><strong>下一批 6★ 顺序</strong>：优先 <strong>Baron (已满觉 <span class="aw aw5">A5</span>)</strong> → <strong>Hollow / Vortex / Ferssi</strong> → <strong>Olague</strong> 接在后面。</li>
           <li><strong>为什么 Olague 暂缓 6★？</strong> 升1个6★需约 236 万 EXP + 5个5★狗粮。Olague 刚拿（4★），先拉到 <strong>5★满级 + P5</strong> 即可稳扛 Void Rift 和主线；<strong>Laurel 已 5★P5 星级毕业，永远不要升 6★！</strong></li>
         </ul>
       </div>
@@ -546,8 +709,8 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
           </tr>
           <tr>
             <td><strong>核心觉醒 (Awakening)</strong></td>
-            <td><strong>Baron A5 (满)</strong> · <strong>Maul A4</strong> · <strong>Vortex A3</strong> · <strong>Marri A3</strong></td>
-            <td>传说/主力觉醒：<strong>Hatssut A1</strong> · <strong>Hex A1</strong> · <strong>Idril A1</strong> · Estrid A2 · Voroth A2 · Hollow A1 · Pyros A1。</td>
+            <td><strong>Baron <span class="aw aw5">A5</span> (满)</strong> · <strong>Maul <span class="aw aw4">A4</span></strong> · <strong>Vortex <span class="aw aw3">A3</span></strong> · <strong>Marri <span class="aw aw3">A3</span></strong></td>
+            <td>传说/主力觉醒：<strong>Hatssut <span class="aw aw1">A1</span></strong> · <strong>Hex <span class="aw aw1">A1</span></strong> · <strong>Idril <span class="aw aw1">A1</span></strong> · Estrid <span class="aw aw2">A2</span> · Voroth <span class="aw aw2">A2</span> · Hollow <span class="aw aw1">A1</span> · Pyros <span class="aw aw1">A1</span>。</td>
           </tr>
           <tr>
             <td><strong>Tide / 裂隙 / 圣典</strong></td>
@@ -585,7 +748,7 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
             <td><strong>10-24 ~ 10-26</strong></td>
             <td>Day 5 ~ 7</td>
             <td><strong>Hex UP 池</strong> & Arrival 榜一结算 (10-26 15:30)</td>
-            <td>Hex 已有 6★P6 A1，<strong>直接跳过不抽</strong>！周一下午领 Arrival 榜一大奖（传说技能晶喂 Hatssut，3红晶+1金晶入库）。</td>
+            <td>Hex 已有 6★P6 <span class="aw aw1">A1</span>，<strong>直接跳过不抽</strong>！周一下午领 Arrival 榜一大奖（传说技能晶喂 Hatssut，3红晶+1金晶入库）。</td>
           </tr>
           <tr style="background: rgba(245, 158, 11, 0.08);">
             <td><strong>10-30 ~ 11-01</strong></td>
@@ -608,7 +771,7 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
           <tr>
             <td><strong>约 11-13 ~ 11-16</strong></td>
             <td>Day 25 ~ 28</td>
-            <td><strong>Nerissa / Vorn 新手池</strong> + <strong>Day 28 签到送 Greed (贪婪)</strong></td>
+            <td><strong><span class="hero-slot r-legendary"><img class="hero-frame" src="img/frames/legendary-90.webp" alt="" width="32" height="32"><img class="hero-ava" src="img/heroes/nerissa.webp" alt="Nerissa" width="32" height="32" loading="lazy"></span>Nerissa / <img class="hero-ava" src="img/heroes/vorn.webp" alt="Vorn" width="32" height="32" loading="lazy">Vorn 新手池</strong> + <strong>Day 28 签到送 Greed (贪婪)</strong></td>
             <td>Day 28 免费领 A+ 级群攻减速法师 <strong>Greed</strong>，直接补齐 GR1（装备本1）主力拼图。</td>
           </tr>
         </tbody>
@@ -625,11 +788,11 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
 
     <div class="filter-bar">
       <button class="btn btn-outline active" onclick="filterRoster('all', this)">全部职业</button>
-      <button class="btn btn-outline" onclick="filterRoster('Marksman', this)">🏹 射手 (Marksman)</button>
-      <button class="btn btn-outline" onclick="filterRoster('Fighter', this)">⚔️ 战士 (Fighter)</button>
-      <button class="btn btn-outline" onclick="filterRoster('Defender', this)">🛡️ 坦克 (Defender)</button>
-      <button class="btn btn-outline" onclick="filterRoster('Mage', this)">🔮 法师 (Mage)</button>
-      <button class="btn btn-outline" onclick="filterRoster('Healer', this)">💚 治疗 (Healer)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Marksman', this)"><img class="class-icon" src="img/icons/class-marksman.webp" alt="">射手 (Marksman)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Fighter', this)"><img class="class-icon" src="img/icons/class-fighter.webp" alt="">战士 (Fighter)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Defender', this)"><img class="class-icon" src="img/icons/class-defender.webp" alt="">坦克 (Defender)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Mage', this)"><img class="class-icon" src="img/icons/class-mage.webp" alt="">法师 (Mage)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Healer', this)"><img class="class-icon" src="img/icons/class-healer.webp" alt="">治疗 (Healer)</button>
     </div>
 
     <div class="table-wrap" style="margin-bottom: 18px;">
@@ -646,51 +809,51 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
           <tr data-role="Marksman">
             <td><strong>🏹 射手</strong></td>
             <td>
-              <span class="pill pill-gold">Hatssut 6★P6 A1</span>
-              <span class="pill pill-gold">Hex 6★P6 A1</span>
-              <span class="pill pill-purple">Idril 6★P6 A1</span>
-              <span class="pill pill-purple">Maul 5★P5 A4</span>
+              <span class="pill pill-gold"><img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut <span class="stars" title="6★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span></span>
+              <span class="pill pill-gold"><img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex <span class="stars" title="6★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span></span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/idril.webp" alt="Idril" width="32" height="32" loading="lazy">Idril <span class="stars" title="6★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span></span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/maul.webp" alt="Maul" width="32" height="32" loading="lazy">Maul <span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 <span class="aw aw4">A4</span></span>
             </td>
-            <td><strong>Theowin</strong>, <strong>Brunor</strong> (锁好1只备合成 Fusion)</td>
-            <td><strong>Kai 5★P1</strong> (Fasti评级低，Skip不喂技能石), Harpun×2, Eliza</td>
+            <td><strong><img class="hero-ava" src="img/heroes/theowin.webp" alt="Theowin" width="32" height="32" loading="lazy">Theowin</strong>, <strong><img class="hero-ava" src="img/heroes/brunor.webp" alt="Brunor" width="32" height="32" loading="lazy">Brunor</strong> (锁好1只备合成 Fusion)</td>
+            <td><strong><img class="hero-ava" src="img/heroes/kai.webp" alt="Kai" width="32" height="32" loading="lazy">Kai <span class="stars" title="5★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P1</strong> (Fasti评级低，Skip不喂技能石), <img class="hero-ava" src="img/heroes/harpun.webp" alt="Harpun" width="32" height="32" loading="lazy">Harpun×2, <img class="hero-ava" src="img/heroes/eliza.webp" alt="Eliza" width="32" height="32" loading="lazy">Eliza</td>
           </tr>
           <tr data-role="Fighter">
             <td><strong>⚔️ 战士</strong></td>
             <td>
-              <span class="pill pill-purple">Estrid 4★P4 A2</span>
-              <span class="pill pill-purple">Veyrathia 5★P5 A0</span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/estrid.webp" alt="Estrid" width="32" height="32" loading="lazy">Estrid <span class="stars" title="4★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">4★</span></span>P4 <span class="aw aw2">A2</span></span>
+              <span class="pill pill-purple"><span class="hero-slot r-epic"><img class="hero-frame" src="img/frames/epic-90.webp" alt="" width="32" height="32"><img class="hero-ava" src="img/heroes/veyrathia.webp" alt="Veyrathia" width="32" height="32" loading="lazy"></span>Veyrathia <span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 A0</span>
             </td>
-            <td><strong>Dalyn 4★</strong> (低费回Cost先锋), <strong>Voroth 4★P4 A2</strong> (史诗紫卡，过渡停手)</td>
-            <td>Janqhar×4, <strong>Borut 3★</strong> (守望者稀有Lord，留1只凑阵营试炼)</td>
+            <td><strong><img class="hero-ava" src="img/heroes/dalyn.webp" alt="Dalyn" width="32" height="32" loading="lazy">Dalyn <span class="stars" title="4★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">4★</span></span></strong> (低费回Cost先锋), <strong><img class="hero-ava" src="img/heroes/voroth.webp" alt="Voroth" width="32" height="32" loading="lazy">Voroth <span class="stars" title="4★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">4★</span></span>P4 <span class="aw aw2">A2</span></strong> (史诗紫卡，过渡停手)</td>
+            <td><img class="hero-ava" src="img/heroes/janqhar.webp" alt="Janqhar" width="32" height="32" loading="lazy">Janqhar×4, <strong><img class="hero-ava" src="img/heroes/borut.webp" alt="Borut" width="32" height="32" loading="lazy">Borut <span class="stars" title="3★"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">3★</span></span></strong> (守望者稀有Lord，留1只凑阵营试炼)</td>
           </tr>
           <tr data-role="Defender">
             <td><strong>🛡️ 坦克</strong></td>
             <td>
-              <span class="pill pill-purple">Baron 5★P5 A5(满)</span>
-              <span class="pill pill-purple">Olague 4★ (刚拿→升5★P5)</span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron <span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 <span class="aw aw5">A5</span>(满)</span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/olague.webp" alt="Olague" width="32" height="32" loading="lazy">Olague <span class="stars" title="4★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">4★</span></span> (刚拿→升5★P5)</span>
             </td>
-            <td><strong>Livian</strong> (合成材料锁好), Aveline A1, Meriel</td>
-            <td>Rhox, Drayga×2, <strong>Rex 4★P4</strong> (任务升星过的3★稀有，留着凑数)</td>
+            <td><strong><img class="hero-ava" src="img/heroes/livian.webp" alt="Livian" width="32" height="32" loading="lazy">Livian</strong> (合成材料锁好), <img class="hero-ava" src="img/heroes/aveline.webp" alt="Aveline" width="32" height="32" loading="lazy">Aveline <span class="aw aw1">A1</span>, <img class="hero-ava" src="img/heroes/meriel.webp" alt="Meriel" width="32" height="32" loading="lazy">Meriel</td>
+            <td><img class="hero-ava" src="img/heroes/rhox.webp" alt="Rhox" width="32" height="32" loading="lazy">Rhox, <img class="hero-ava" src="img/heroes/drayga.webp" alt="Drayga" width="32" height="32" loading="lazy">Drayga×2, <strong><img class="hero-ava" src="img/heroes/rex.webp" alt="Rex" width="32" height="32" loading="lazy">Rex <span class="stars" title="4★"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">4★</span></span>P4</strong> (任务升星过的3★稀有，留着凑数)</td>
           </tr>
           <tr data-role="Mage">
             <td><strong>🔮 法师</strong></td>
             <td>
-              <span class="pill pill-gold">Venoma 5★P5 A0 (Lord)</span>
-              <span class="pill pill-purple">Marri 5★P5 A3</span>
-              <span class="pill pill-purple">Laurel 5★P5 (毕业勿6★)</span>
+              <span class="pill pill-gold"><img class="hero-ava" src="img/heroes/venoma.webp" alt="Venoma" width="32" height="32" loading="lazy">Venoma <span class="stars" title="5★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 A0 (Lord)</span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/marri.webp" alt="Marri" width="32" height="32" loading="lazy">Marri <span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 <span class="aw aw3">A3</span></span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel <span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 (毕业勿6★)</span>
             </td>
-            <td><strong>Ai</strong> (GR1冰冻过渡好手), <strong>Pyros A1</strong> (烈焰史诗Lord，留待后养)</td>
-            <td>Nauvras×2, Nisalt, Imani×2, <strong>Voltus 3★P3</strong> (剧情/合成卡，留1只)</td>
+            <td><strong><img class="hero-ava" src="img/heroes/ai.webp" alt="Ai" width="32" height="32" loading="lazy">Ai</strong> (GR1冰冻过渡好手), <strong><img class="hero-ava" src="img/heroes/pyros.webp" alt="Pyros" width="32" height="32" loading="lazy">Pyros <span class="aw aw1">A1</span></strong> (烈焰史诗Lord，留待后养)</td>
+            <td><img class="hero-ava" src="img/heroes/nauvras.webp" alt="Nauvras" width="32" height="32" loading="lazy">Nauvras×2, <img class="hero-ava" src="img/heroes/nisalt.webp" alt="Nisalt" width="32" height="32" loading="lazy">Nisalt, <img class="hero-ava" src="img/heroes/imani.webp" alt="Imani" width="32" height="32" loading="lazy">Imani×2, <strong><img class="hero-ava" src="img/heroes/voltus.webp" alt="Voltus" width="32" height="32" loading="lazy">Voltus <span class="stars" title="3★"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/rare-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">3★</span></span>P3</strong> (剧情/合成卡，留1只)</td>
           </tr>
           <tr data-role="Healer">
             <td><strong>💚 治疗</strong></td>
             <td>
-              <span class="pill pill-gold">Ferssi 5★ (传说减伤奶)</span>
-              <span class="pill pill-purple">Hollow 5★P5 A1</span>
-              <span class="pill pill-purple">Vortex 5★P5 A3</span>
+              <span class="pill pill-gold"><img class="hero-ava" src="img/heroes/ferssi.webp" alt="Ferssi" width="32" height="32" loading="lazy">Ferssi <span class="stars" title="5★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span> (传说减伤奶)</span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow <span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 <span class="aw aw1">A1</span></span>
+              <span class="pill pill-purple"><img class="hero-ava" src="img/heroes/vortex.webp" alt="Vortex" width="32" height="32" loading="lazy">Vortex <span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 <span class="aw aw3">A3</span></span>
             </td>
-            <td><strong>Nissandei</strong>, <strong>Lili</strong> (保留备阵营试炼双奶条件)</td>
-            <td>— (三大主力奶 Hollow + Vortex + Ferssi 已齐！)</td>
+            <td><strong><img class="hero-ava" src="img/heroes/nissandei.webp" alt="Nissandei" width="32" height="32" loading="lazy">Nissandei</strong>, <strong><img class="hero-ava" src="img/heroes/lili.webp" alt="Lili" width="32" height="32" loading="lazy">Lili</strong> (保留备阵营试炼双奶条件)</td>
+            <td>— (三大主力奶 <img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow + <img class="hero-ava" src="img/heroes/vortex.webp" alt="Vortex" width="32" height="32" loading="lazy">Vortex + <img class="hero-ava" src="img/heroes/ferssi.webp" alt="Ferssi" width="32" height="32" loading="lazy">Ferssi 已齐！)</td>
           </tr>
         </tbody>
       </table>
@@ -698,8 +861,8 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
 
     <div class="callout callout-info">
       <strong>📌 3★ 稀有英雄去留铁律（结合 Fastidious 与实战）：</strong><br>
-      1. <strong>史诗(4★紫)与传说(5★金)永不遣散、永不当狗粮</strong>：重复卡全部用来点觉醒（Awaken），满觉 A5 后多出来的再分解换觉醒币。<br>
-      2. <strong>以后抽到必锁 1 只的功能型 3★ 蓝卡</strong>：<strong>Autumn (秋天 - 暴击爆伤神辅)</strong>、<strong>Decimus (德西穆斯 - GR2不死替死鬼，Fasti A级)</strong>、<strong>Narvi (纳尔薇 - 回Cost先锋)</strong>、<strong>Camille (合成金卡憎恶必用材料)</strong>、<strong>Elukas (减速冰冻，FT A+)</strong>、<strong>Cuke (毒伤)</strong>，以及 3★ 稀有领主（<strong>Borut / Niro / Dagna</strong>，在没有同阵营高阶领主前留1只打 Faction Trial）。其余重复3★一律 Dismiss 遣散换 <strong>30 红钻/只</strong>！
+      1. <strong>史诗(4★紫)与传说(5★金)永不遣散、永不当狗粮</strong>：重复卡全部用来点觉醒（Awaken），满觉 <span class="aw aw5">A5</span> 后多出来的再分解换觉醒币。<br>
+      2. <strong>以后抽到必锁 1 只的功能型 3★ 蓝卡</strong>：<strong><img class="hero-ava" src="img/heroes/autumn.webp" alt="Autumn" width="32" height="32" loading="lazy">Autumn (秋天 - 暴击爆伤神辅)</strong>、<strong><img class="hero-ava" src="img/heroes/decimus.webp" alt="Decimus" width="32" height="32" loading="lazy">Decimus (德西穆斯 - GR2不死替死鬼，Fasti A级)</strong>、<strong><img class="hero-ava" src="img/heroes/narvi.webp" alt="Narvi" width="32" height="32" loading="lazy">Narvi (纳尔薇 - 回Cost先锋)</strong>、<strong><img class="hero-ava" src="img/heroes/camille.webp" alt="Camille" width="32" height="32" loading="lazy">Camille (合成金卡憎恶必用材料)</strong>、<strong><img class="hero-ava" src="img/heroes/elukas.webp" alt="Elukas" width="32" height="32" loading="lazy">Elukas (减速冰冻，FT A+)</strong>、<strong><img class="hero-ava" src="img/heroes/cuke.webp" alt="Cuke" width="32" height="32" loading="lazy">Cuke (毒伤)</strong>，以及 3★ 稀有领主（<strong><img class="hero-ava" src="img/heroes/borut.webp" alt="Borut" width="32" height="32" loading="lazy">Borut / <img class="hero-ava" src="img/heroes/niro.webp" alt="Niro" width="32" height="32" loading="lazy">Niro / <img class="hero-ava" src="img/heroes/dagna.webp" alt="Dagna" width="32" height="32" loading="lazy">Dagna</strong>，在没有同阵营高阶领主前留1只打 Faction Trial）。其余重复3★一律 Dismiss 遣散换 <strong>30 红钻/只</strong>！
     </div>
   </section>
 
@@ -714,24 +877,27 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
       <div class="card">
         <div class="card-title"><span>🔥 传说/史诗技能结晶 & 升星序列</span><span class="pill pill-gold">资源分配</span></div>
         <ul>
-          <li><strong>传说技能结晶 (Legendary Skill Crystal)</strong>：每周公会店必买！第1顺位喂满 <strong>Hatssut</strong> $
-ightarrow$ 第2顺位喂 <strong>Hex</strong> $
-ightarrow$ 第3顺位留给即将抽的 <strong>孙悟空 / Elowyn</strong>（<strong>Ferssi</strong> 和 <strong>Venoma</strong> 先不抢传说技能晶，靠基础技能等级即可工作）。</li>
+          <li><strong>传说技能结晶 (Legendary Skill Crystal)</strong>：每周公会店必买！第1顺位喂满 <strong>Hatssut</strong> → 第2顺位喂 <strong>Hex</strong> → 第3顺位留给即将抽的 <strong>孙悟空 / Elowyn</strong>（<strong>Ferssi</strong> 和 <strong>Venoma</strong> 先不抢传说技能晶，靠基础技能等级即可工作）。</li>
           <li><strong>史诗技能结晶 (Epic Skill Crystal)</strong>：优先喂满 <strong>Idril、Hollow、Vortex、Baron、Estrid、Marri</strong>；<strong>Veyrathia</strong> 停在 P5 过渡即可，不砸稀缺资源。</li>
           <li><strong>Ferssi (新抽到的5★传说奶) 定位</strong>：Fastidious 综合 <strong>A+ 级（GR2 高达 S 级，GB2 A+）</strong>！核心神技是给周围队友提供高额<strong>范围伤害减免 (AoE DMG Reduction)</strong> 与激励，立刻拉到 <strong>5★满级 + P5</strong> 进驻 GR2 和高难本！</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="card-title"><span>🏪 Fastidious.gg 觉醒商店 (Awakening Shop) 必买日历</span><span class="pill pill-purple">每周一刷新</span></div>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">商店按固定 24 周周期循环（史诗魂石 400 紫币，传说魂石 400 金币）：</p>
+        <div class="card-title">
+          <span>🏪 Fastidious.gg 觉醒商店 (Awakening Shop) 必买日历</span>
+          <span style="display:inline-flex; gap:6px; align-items:center; flex-shrink:0;">
+            <span class="unverified">⚠️ 未核实</span>
+            <span class="pill pill-purple">每周一刷新</span>
+          </span>
+        </div>
+        <p class="unverified-note">24 周轮换的具体日期未经核实，以游戏内觉醒商店当周实际上架为准。</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">下列排期是一份未核实的 24 周周期转述（史诗魂石 400 紫币，传说魂石 400 金币）：</p>
         <ul>
-          <li><strong>本周 (10-19 ~ 10-25)</strong>：正在售卖 <code>Baron</code>（你 Baron 已经 A5 满觉，直接省下 400 紫币！）。</li>
-          <li>🔥 <strong>4周后 (11月16日当周)</strong>：同时刷新 <strong><code>Idril (400紫币)</code> + <code>Laurel (400紫币)</code></strong>！务必留好紫币买 Idril 冲 A3/A5！</li>
+          <li><strong>本周 (10-19 ~ 10-25)</strong>：正在售卖 <code>Baron</code>（你 Baron 已经 <span class="aw aw5">A5</span> 满觉，直接省下 400 紫币！）。</li>
+          <li>🔥 <strong>4周后 (11月16日当周)</strong>：同时刷新 <strong><code>Idril (400紫币)</code> + <code>Laurel (400紫币)</code></strong>！务必留好紫币买 Idril 冲 <span class="aw aw3">A3</span>/<span class="aw aw5">A5</span>！</li>
           <li>🔥 <strong>5周后 (11月23日当周)</strong>：同时刷新 <strong><code>Hex (400金币)</code> + <code>Olague (400紫币)</code></strong>！</li>
-          <li><strong>9~11周后 (12月下旬~1月初)</strong>：依次刷新 <code>Marri</code> (12-21) $
-ightarrow$ <code>Maul</code> (12-28，你已A4差1满觉) $
-ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
+          <li><strong>9~11周后 (12月下旬~1月初)</strong>：依次刷新 <code>Marri</code> (12-21) → <code>Maul</code> (12-28，你已<span class="aw aw4">A4</span>差1满觉) → <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
         </ul>
       </div>
     </div>
@@ -749,16 +915,17 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
         <div class="card-title"><span>📋 核心愿望单状态速查</span></div>
         <p style="font-size:0.83rem; margin-bottom:8px;">Fastidious 天梯从高到低为：<code>SSS</code> &gt; <code>SS</code> &gt; <code>S+</code> &gt; <code>S</code> &gt; <code>A+</code> &gt; <code>A</code> &gt; <code>B+</code></p>
         <ul>
-          <li><span class="tier tier-sp">S+</span> <strong>已拥有</strong>：<strong>Hatssut</strong> (6★P6 A1) | <strong>待追目标</strong>：<strong>Elowyn</strong> (Day19-21)、<strong>Silas</strong>、<strong>Nerissa</strong> (Day25-28)</li>
-          <li><span class="tier tier-s">S</span> <strong>已拥有</strong>：<strong>Idril</strong> (6★P6 A1)、<strong>Hollow</strong> (5★P5 A1) | <strong>待拿</strong>：<strong>Sun Wukong</strong> (10-30池)、<strong>Volka</strong> (英雄之路#18)、<strong>Vierna</strong></li>
-          <li><span class="tier tier-ap">A+</span> <strong>已拥有</strong>：<strong>Hex</strong> (GB/Boss战 S级)、<strong>Ferssi</strong> (GR2 S级)、<strong>Vortex</strong> (A3)、<strong>Olague</strong>、<strong>Marri</strong> (A3)、<strong>Estrid</strong> (A2)、<strong>Veyrathia</strong> | <strong>待拿</strong>：<strong>Greed</strong> (Day28签到)</li>
-          <li><span class="tier tier-a">A / B+</span> <strong>刚需核心</strong>：<strong>Baron</strong> (已A5)、<strong>Venoma</strong> (双队Lord)、<strong>Maul</strong> (A4)、<strong>Laurel</strong> (B+但回怒机制唯一真神)、<strong>Dolores</strong> (A级但高难破防必备)、<strong>Wrath</strong> (Day14领)。</li>
+          <li><span class="tier tier-sp">S+</span> <strong>已拥有</strong>：<strong><img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut</strong> (<span class="stars" title="6★"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/legendary-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span>) | <strong>待追目标</strong>：<strong><img class="hero-ava" src="img/heroes/elowyn.webp" alt="Elowyn" width="32" height="32" loading="lazy">Elowyn</strong> (Day19-21)、<strong><img class="hero-ava" src="img/heroes/silas.webp" alt="Silas" width="32" height="32" loading="lazy">Silas</strong>、<strong><span class="hero-slot r-legendary"><img class="hero-frame" src="img/frames/legendary-90.webp" alt="" width="32" height="32"><img class="hero-ava" src="img/heroes/nerissa.webp" alt="Nerissa" width="32" height="32" loading="lazy"></span>Nerissa</strong> (Day25-28)</li>
+          <li><span class="tier tier-s">S</span> <strong>已拥有</strong>：<strong><img class="hero-ava" src="img/heroes/idril.webp" alt="Idril" width="32" height="32" loading="lazy">Idril</strong> (<span class="stars" title="6★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">6★</span></span>P6 <span class="aw aw1">A1</span>)、<strong><img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow</strong> (<span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5 <span class="aw aw1">A1</span>) | <strong>待拿</strong>：<strong><img class="hero-ava" src="img/heroes/sun-wukong.webp" alt="Sun Wukong" width="32" height="32" loading="lazy">Sun Wukong</strong> (10-30池)、<strong><img class="hero-ava" src="img/heroes/volka.webp" alt="Volka" width="32" height="32" loading="lazy">Volka</strong> (英雄之路#18)、<strong><img class="hero-ava" src="img/heroes/vierna.webp" alt="Vierna" width="32" height="32" loading="lazy">Vierna</strong></li>
+          <li><span class="tier tier-ap">A+</span> <strong>已拥有</strong>：<strong><img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex</strong> (GB/Boss战 S级)、<strong><img class="hero-ava" src="img/heroes/ferssi.webp" alt="Ferssi" width="32" height="32" loading="lazy">Ferssi</strong> (GR2 S级)、<strong><img class="hero-ava" src="img/heroes/vortex.webp" alt="Vortex" width="32" height="32" loading="lazy">Vortex</strong> (<span class="aw aw3">A3</span>)、<strong><img class="hero-ava" src="img/heroes/olague.webp" alt="Olague" width="32" height="32" loading="lazy">Olague</strong>、<strong><img class="hero-ava" src="img/heroes/marri.webp" alt="Marri" width="32" height="32" loading="lazy">Marri</strong> (<span class="aw aw3">A3</span>)、<strong><img class="hero-ava" src="img/heroes/estrid.webp" alt="Estrid" width="32" height="32" loading="lazy">Estrid</strong> (<span class="aw aw2">A2</span>)、<strong><span class="hero-slot r-epic"><img class="hero-frame" src="img/frames/epic-90.webp" alt="" width="32" height="32"><img class="hero-ava" src="img/heroes/veyrathia.webp" alt="Veyrathia" width="32" height="32" loading="lazy"></span>Veyrathia</strong> | <strong>待拿</strong>：<strong><img class="hero-ava" src="img/heroes/greed.webp" alt="Greed" width="32" height="32" loading="lazy">Greed</strong> (Day28签到)</li>
+          <li><span class="tier tier-a">A / B+</span> <strong>刚需核心</strong>：<strong><img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron</strong> (已<span class="aw aw5">A5</span>)、<strong><img class="hero-ava" src="img/heroes/venoma.webp" alt="Venoma" width="32" height="32" loading="lazy">Venoma</strong> (双队Lord)、<strong><img class="hero-ava" src="img/heroes/maul.webp" alt="Maul" width="32" height="32" loading="lazy">Maul</strong> (<span class="aw aw4">A4</span>)、<strong><img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel</strong> (B+但回怒机制唯一真神)、<strong><img class="hero-ava" src="img/heroes/dolores.webp" alt="Dolores" width="32" height="32" loading="lazy">Dolores</strong> (A级但高难破防必备)、<strong><img class="hero-ava" src="img/heroes/wrath.webp" alt="Wrath" width="32" height="32" loading="lazy">Wrath</strong> (Day14领)。</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="card-title"><span>🧮 Fastidious 逆向工程：如何快速拉高 BP 碾压 Tide Wave 30？</span><span class="pill pill-cyan" style="background:rgba(6,182,212,0.15);color:#06b6d4;">硬核机制</span></div>
-        <p style="font-size:0.83rem; margin-bottom:8px;">你当前英雄之路第14关被 <strong>Tide Wave 30</strong> 卡住，而 Tide 胜负高度取决于全队面板总 BP！Fastidious 拆解 748 个英雄得出的 <strong>BP 暴涨公式</strong>：</p>
+        <div class="card-title"><span>🧮 Fastidious 逆向工程：如何快速拉高 BP 碾压 Tide Wave 30？</span><span class="unverified">⚠️ 未核实</span></div>
+        <p class="unverified-note">下列数字没有已确认来源：748 个英雄、P6 <code>+6.050</code>、升 6★ <code>+2.100</code>、脆皮 DEF 约 4 倍 BP 权重，以及「Tide 主要由总 BP 决定」。Tide 胜负主要取决于阵容与站位。</p>
+        <p style="font-size:0.83rem; margin-bottom:8px;">你当前英雄之路第14关被 <strong>Tide Wave 30</strong> 卡住。下面是未经核实的转述，称 Fastidious 拆解 748 个英雄得出这套 <strong>BP 暴涨公式</strong>：</p>
         <ul>
           <li><strong>1. 紫星晋级 (Promotion) 权重是升星的 3 倍</strong>：在 BP 公式 <code>(基础+装备)×技能乘区</code> 中，点满 P6 提供高达 <code>+6.050</code> 的乘区加成（而升6★仅 <code>+2.100</code>）！把上阵英雄的 Promotion 刷满是涨 BP 最快手段。</li>
           <li><strong>2. 脆皮职业穿防御装加 4 倍虚胖 BP</strong>：射手/法师/奶妈的防御力 (DEF) 战力权重是坦克的 4 倍以上。打 Tide 那几分钟，给替补英雄塞满高强化紫/红装和神器，打完再扒下来！</li>
@@ -771,13 +938,13 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
   <!-- 7. 装备 Manage Plan -->
   <section id="sec-gear">
     <div class="section-header">
-      <div class="section-title">🛡️ 七、 装备 Manage Plan（Gemini 四规则 + Fastidious 官方配装与导入码）</div>
+      <div class="section-title">🛡️ 七、 装备 Manage Plan（Gemini 四规则 + Fastidious 开荒配装）</div>
       <div class="section-sub">保留全部极品散件，杜绝误卖</div>
     </div>
 
     <div class="callout callout-success">
       <strong>✅ 结论：你目前已设好的 4 条自定义规则（Set=ALL，Essential留空，关闭Auto-Equip）完全正确，继续保持！</strong><br>
-      同时记住：<strong>Ancient（带红/金闪光边框的远古装备，如你那件 +12 双紫条 +66攻速/+25.5%回怒 的 Mana Spring 奶妈装）</strong> 在自动战斗卖装时受系统底层保护不会被卖，进包后顺手点上 <strong>🔒 小锁头</strong> 即可。
+      同时记住：有一种未经核实的说法认为 <strong>Ancient（带红/金闪光边框的远古装备，如你那件 +12 双紫条 +66攻速/+25.5%回怒 的 Mana Spring 奶妈装）</strong> 在自动战斗卖装时受系统底层保护不会被卖 <span class="unverified">⚠️ 未核实</span>。进包后仍请顺手点上 <strong>🔒 小锁头</strong>。
     </div>
 
     <div class="table-wrap" style="margin-bottom: 16px;">
@@ -824,35 +991,15 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
       </table>
     </div>
 
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-title"><span>📐 Fastidious Stage 1 (开荒期) 权威配装细节</span></div>
-        <ul>
-          <li><strong>主力输出 (Hatssut / Hex / Idril / Maul / Estrid)</strong>：Fastidious 推荐开荒期右三件主属性优先穿 <strong>3 件 <code>ATK Bonus %</code></strong>（靠副词条凑暴击率和攻速；若副词条暴击太低再穿 1 件暴击率主属性）。</li>
-          <li><strong>副词条真实收益排序</strong>：在 Stage 1 开荒期，<code>ATK SPD</code> &gt; <code>Crit. Rate %</code> &gt; <strong><code>Flat ATK (固定攻击)</code></strong> &gt; <code>Crit. DMG %</code>！因为前期跨过怪物防御门槛第一重要，歪出固定攻击力完全可用！</li>
-          <li><strong>Hollow (攻击奶) 配装提醒</strong>：不要长期只穿纯 R-SPD 主属性，右三件采用 <strong><code>ATK%</code> + <code>ATK%</code> + 你那件 <code>+66攻速远古装</code></strong>，兼顾奶量与机关枪回怒。</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span>📋 Fastidious.gg 官方导入码 (备存至 GR18+ 使用)</span></div>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;">注意：<strong>现阶段不要启用 Endgame 码</strong>（会卖掉你的过渡红装），保存在此供你通关 GR3-18 后一键导入新方案参考：</p>
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <div>
-            <span style="font-size:0.82rem; margin-right:8px;">中后期过滤码 (Mid/Late)：</span>
-            <span class="code-box">ODMyMTg= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMTg=')">复制</button></span>
-          </div>
-          <div>
-            <span style="font-size:0.82rem; margin-right:8px;">大后期过滤码 (Late/End)：</span>
-            <span class="code-box">ODMyMjA= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMjA=')">复制</button></span>
-          </div>
-          <div>
-            <span style="font-size:0.82rem; margin-right:8px;">Fasti 个人终极码 (Endgame)：</span>
-            <span class="code-box">ODMyMjM= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMjM=')">复制</button></span>
-          </div>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-title"><span>📐 Fastidious Stage 1 (开荒期) 权威配装细节</span></div>
+      <ul>
+        <li><strong>主力输出 (Hatssut / Hex / Idril / Maul / Estrid)</strong>：Fastidious 推荐开荒期右三件主属性优先穿 <strong>3 件 <code>ATK Bonus %</code></strong>（靠副词条凑暴击率和攻速；若副词条暴击太低再穿 1 件暴击率主属性）。</li>
+        <li><strong>副词条真实收益排序</strong>：在 Stage 1 开荒期，<code>ATK SPD</code> &gt; <code>Crit. Rate %</code> &gt; <strong><code>Flat ATK (固定攻击)</code></strong> &gt; <code>Crit. DMG %</code>！因为前期跨过怪物防御门槛第一重要，歪出固定攻击力完全可用！</li>
+        <li><strong>Hollow (攻击奶) 配装提醒</strong>：不要长期只穿纯 R-SPD 主属性，右三件采用 <strong><code>ATK%</code> + <code>ATK%</code> + 你那件 <code>+66攻速远古装</code></strong>，兼顾奶量与机关枪回怒。</li>
+      </ul>
     </div>
+    <p class="filter-note">不使用 Fastidious 过滤码，只保留上面 4 条自定义 Manage Plan 规则（R-TANK / R-SPD / R-DPS / L-All）。</p>
   </section>
 
   <!-- 8. 神器库存 & 真实评级修正 -->
@@ -888,8 +1035,7 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
             <td><strong>+8</strong> (冲+10)</td>
             <td>🏹 射手</td>
             <td><span class="tier tier-s">S Tier</span></td>
-            <td>暴击时有 50% 概率无视目标 20% $
-ightarrow$ 30% 防御力 (DEF)。</td>
+            <td>暴击时有 50% 概率无视目标 20% → 30% 防御力 (DEF)。</td>
             <td>🔥 <strong>锁死给 6★ Idril（或 Hatssut）！</strong> Idril 专页排名第1的毕业神器，打高防怪破甲全靠它。</td>
           </tr>
           <tr>
@@ -913,8 +1059,7 @@ ightarrow$ 30% 防御力 (DEF)。</td>
             <td><strong>+1</strong> (可+10)</td>
             <td>🛡️ 坦克</td>
             <td><span class="tier tier-a">A Tier</span></td>
-            <td>受到的治疗效果 (Received Healing) 提高 20% $
-ightarrow$ 40%，且提供神话级高额血防白字。</td>
+            <td>受到的治疗效果 (Received Healing) 提高 20% → 40%，且提供神话级高额血防白字。</td>
             <td>给主坦 <strong>Baron</strong>（或 <strong>Olague</strong>）穿！直到以后刷出 SSS 级 <code>Bastion Ring</code> 再换。</td>
           </tr>
           <tr>
@@ -963,7 +1108,7 @@ ightarrow$ 40%，且提供神话级高额血防白字。</td>
             <td>🎯 战术大师</td>
             <td><span class="tier tier-a">A Tier</span></td>
             <td><strong>第6职业 Tactician 限定</strong>：伤害 +10%~20%，位移后额外 +5% 伤害持续10秒。</td>
-            <td>虽然目前无战术大师英雄，<strong>直接合星并锁死在仓库</strong>，留给未来的 Valara 等神卡。</td>
+            <td>虽然目前无战术大师英雄，<strong>直接合星并锁死在仓库</strong>，留给未来的 <span class="hero-ava hero-ava-fallback" title="Valara" aria-hidden="true">Va</span>Valara 等神卡。</td>
           </tr>
           <tr>
             <td>🟣 <strong>Medal of Fortitude ×5</strong><br>🟣 <strong>Consuming Rage ×4</strong><br>🟣 <strong>Adamant Will ×3</strong><br>🟣 <strong>Warsong (+10)</strong></td>
@@ -1016,28 +1161,26 @@ ightarrow$ 40%，且提供神话级高额血防白字。</td>
   <section id="sec-teams">
     <div class="section-header">
       <div class="section-title">♟️ 十、 Team 1 / Team 2 双领主 (Lord) 编队机制 & GR3 16~18 站位攻略</div>
-      <div class="section-sub">彻底理清双队长槽与 Laurel 撤退循环</div>
+      <div class="section-sub">彻底理清双队长槽与 <img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel 撤退循环</div>
     </div>
 
     <div class="callout callout-warn">
       <strong>👑 核心机制：Team 1 和 Team 2 各有一个独立的 Lord 队长槽（不是全局只生效一个）！</strong><br>
-      • 编队界面分上下两行（Team 1 / Team 2），每一行最左侧都是带皇冠的 Lord 位。阵营属性加成只对<strong>「与该队 Lord 处在同一行且同阵营」</strong>的英雄生效；但 <strong>Venoma 的第三条领主技（全队首次部署直接 +30% 初始怒气）对全员生效</strong>！<br>
-      • <strong>当前设置 (Day 5~13)</strong>：Team 1 放 <strong>Venoma</strong>（把 <strong>Laurel</strong> 也放进 Team 1 吃秘术同阵营加成）；Team 2 如果上噩梦队（Hatssut / Baron / Veyrathia），可以把 <strong>Veyrathia</strong> 放在 Team 2 的皇冠位当队长（注意她有噩梦队友受治疗 -20% 的词条，Baron 戴 <code>Regal Crest +20%受治疗</code> 刚好抵消），等 Day 14 拿到 <strong>Wrath (愤怒)</strong> 后正式由 Wrath 接管 Team 2 队长位！
+      • 编队界面分上下两行（Team 1 / Team 2），每一行最左侧都是带皇冠的 Lord 位。阵营属性加成只对<strong>「与该队 Lord 处在同一行且同阵营」</strong>的英雄生效；但 <strong><img class="hero-ava" src="img/heroes/venoma.webp" alt="Venoma" width="32" height="32" loading="lazy">Venoma 的第三条领主技（全队首次部署直接 +30% 初始怒气）对全员生效</strong>！<br>
+      • <strong>当前设置 (Day 5~13)</strong>：Team 1 放 <strong><img class="hero-ava" src="img/heroes/venoma.webp" alt="Venoma" width="32" height="32" loading="lazy">Venoma</strong>（把 <strong><img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel</strong> 也放进 Team 1 吃秘术同阵营加成）；Team 2 如果上噩梦队（<img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut / <img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron / <span class="hero-slot r-epic"><img class="hero-frame" src="img/frames/epic-90.webp" alt="" width="32" height="32"><img class="hero-ava" src="img/heroes/veyrathia.webp" alt="Veyrathia" width="32" height="32" loading="lazy"></span>Veyrathia），可以把 <strong><span class="hero-slot r-epic"><img class="hero-frame" src="img/frames/epic-90.webp" alt="" width="32" height="32"><img class="hero-ava" src="img/heroes/veyrathia.webp" alt="Veyrathia" width="32" height="32" loading="lazy"></span>Veyrathia</strong> 放在 Team 2 的皇冠位当队长（注意她有噩梦队友受治疗 -20% 的词条，<img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron 戴 <code>Regal Crest +20%受治疗</code> 刚好抵消），等 Day 14 拿到 <strong><img class="hero-ava" src="img/heroes/wrath.webp" alt="Wrath" width="32" height="32" loading="lazy">Wrath (愤怒)</strong> 后正式由 <img class="hero-ava" src="img/heroes/wrath.webp" alt="Wrath" width="32" height="32" loading="lazy">Wrath 接管 Team 2 队长位！
     </div>
 
     <div class="grid-2">
       <div class="card">
         <div class="card-title"><span>🏹 GR3 (Stage 16 ~ 18) 破关标准作业程序</span><span class="pill pill-green">当前主战场</span></div>
         <ul>
-          <li><strong>10人标准编队</strong>：<strong>Venoma (Lord)</strong> + <strong>Hatssut</strong> + <strong>Idril</strong> + <strong>Hex</strong> + <strong>Maul</strong> + <strong>Laurel (5★P5)</strong> + <strong>Hollow</strong> + <strong>Vortex</strong> + <strong>Dalyn (开局产Cost)</strong> + <strong>Baron (或Veyrathia堵门)</strong>。（<em>注：Kai 彻底踢出队伍 Skip！</em>）</li>
+          <li><strong>10人标准编队</strong>：<strong><img class="hero-ava" src="img/heroes/venoma.webp" alt="Venoma" width="32" height="32" loading="lazy">Venoma (Lord)</strong> + <strong><img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut</strong> + <strong><img class="hero-ava" src="img/heroes/idril.webp" alt="Idril" width="32" height="32" loading="lazy">Idril</strong> + <strong><img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex</strong> + <strong><img class="hero-ava" src="img/heroes/maul.webp" alt="Maul" width="32" height="32" loading="lazy">Maul</strong> + <strong><img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel (<span class="stars" title="5★"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><img src="img/frames/epic-star-wiki.webp" alt="" width="12" height="10"><span class="sr-only">5★</span></span>P5)</strong> + <strong><img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow</strong> + <strong><img class="hero-ava" src="img/heroes/vortex.webp" alt="Vortex" width="32" height="32" loading="lazy">Vortex</strong> + <strong><img class="hero-ava" src="img/heroes/dalyn.webp" alt="Dalyn" width="32" height="32" loading="lazy">Dalyn (开局产Cost)</strong> + <strong><img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron (或<span class="hero-slot r-epic"><img class="hero-frame" src="img/frames/epic-90.webp" alt="" width="32" height="32"><img class="hero-ava" src="img/heroes/veyrathia.webp" alt="Veyrathia" width="32" height="32" loading="lazy"></span>Veyrathia堵门)</strong>。（<em>注：<img class="hero-ava" src="img/heroes/kai.webp" alt="Kai" width="32" height="32" loading="lazy">Kai 彻底踢出队伍 Skip！</em>）</li>
           <li><strong>三路站位分工</strong>：
             <ul>
-              <li><strong>中路高台</strong>：先下 <strong>Dalyn</strong> 产费 $
-ightarrow$ 下 <strong>Idril (穿全身最好ATK%装 + Idril's Gaze)</strong> 与 <strong>Hex (戴 Spirit Siphon 点杀巫女 Boss 与中路大怪)</strong> + <strong>Hollow</strong> 覆盖回怒。</li>
-              <li><strong>左路高台</strong>：下 <strong>Maul (A4，戴 Shadow Gaze)</strong> 朝左单守群怪波次。</li>
-              <li><strong>右路高台</strong>：下 <strong>Hatssut (戴 Shadow Gaze)</strong> 靠隐身与大招单秒右路刷出的飞怪群。</li>
-              <li><strong>Laurel 撤退充能循环</strong>：在中路高台预留 1 个空位，每当 Idril/Hex 大招快转好或刚放完时，把 <strong>Laurel</strong> 贴身放下 $
-ightarrow$ <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围所有人直接注入 <strong>+50% 怒气</strong>！</li>
+              <li><strong>中路高台</strong>：先下 <strong><img class="hero-ava" src="img/heroes/dalyn.webp" alt="Dalyn" width="32" height="32" loading="lazy">Dalyn</strong> 产费 → 下 <strong><img class="hero-ava" src="img/heroes/idril.webp" alt="Idril" width="32" height="32" loading="lazy">Idril (穿全身最好ATK%装 + Idril's Gaze)</strong> 与 <strong><img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex (戴 Spirit Siphon 点杀巫女 Boss 与中路大怪)</strong> + <strong><img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow</strong> 覆盖回怒。</li>
+              <li><strong>左路高台</strong>：下 <strong><img class="hero-ava" src="img/heroes/maul.webp" alt="Maul" width="32" height="32" loading="lazy">Maul (<span class="aw aw4">A4</span>，戴 Shadow Gaze)</strong> 朝左单守群怪波次。</li>
+              <li><strong>右路高台</strong>：下 <strong><img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut (戴 Shadow Gaze)</strong> 靠隐身与大招单秒右路刷出的飞怪群。</li>
+              <li><strong><img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel 撤退充能循环</strong>：在中路高台预留 1 个空位，每当 <img class="hero-ava" src="img/heroes/idril.webp" alt="Idril" width="32" height="32" loading="lazy">Idril/<img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex 大招快转好或刚放完时，把 <strong><img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel</strong> 贴身放下 → <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围所有人直接注入 <strong>+50% 怒气</strong>！</li>
             </ul>
           </li>
         </ul>
@@ -1048,17 +1191,17 @@ ightarrow$ <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围
         <ul>
           <li><strong>GR1 (目前 Stage 13 3★ → 试探 14+)</strong>：
             <ul>
-              <li>编队：<strong>Venoma (Lord)</strong> + <strong>Ai (冰晶群控)</strong> + <strong>Marri (A3全场减速冻结)</strong> + <strong>Hatssut / Hex / Idril</strong> + <strong>Estrid (地面隔墙群砍破甲)</strong> + <strong>Hollow + Laurel + Baron</strong>。等 Day 28 签到拿到 <strong>Greed</strong> 后再猛推高层。</li>
+              <li>编队：<strong><img class="hero-ava" src="img/heroes/venoma.webp" alt="Venoma" width="32" height="32" loading="lazy">Venoma (Lord)</strong> + <strong><img class="hero-ava" src="img/heroes/ai.webp" alt="Ai" width="32" height="32" loading="lazy">Ai (冰晶群控)</strong> + <strong><img class="hero-ava" src="img/heroes/marri.webp" alt="Marri" width="32" height="32" loading="lazy">Marri (<span class="aw aw3">A3</span>全场减速冻结)</strong> + <strong><img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut / <img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex / <img class="hero-ava" src="img/heroes/idril.webp" alt="Idril" width="32" height="32" loading="lazy">Idril</strong> + <strong><img class="hero-ava" src="img/heroes/estrid.webp" alt="Estrid" width="32" height="32" loading="lazy">Estrid (地面隔墙群砍破甲)</strong> + <strong><img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow + <img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel + <img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron</strong>。等 Day 28 签到拿到 <strong><img class="hero-ava" src="img/heroes/greed.webp" alt="Greed" width="32" height="32" loading="lazy">Greed</strong> 后再猛推高层。</li>
             </ul>
           </li>
           <li><strong>GR2 (目前 Stage 12 3★ → Vault试炼刷12拿里程碑)</strong>：
             <ul>
-              <li>随着你刚抽到 <strong>Ferssi (GR2 S级范围减伤奶)</strong>，组成 <strong>Baron + Olague + Vortex + Ferssi + Hollow + Hatssut/Hex</strong> 即可稳刷；等英雄之路拿到 <strong>Volka</strong> 后再冲击 18+。</li>
+              <li>随着你刚抽到 <strong><img class="hero-ava" src="img/heroes/ferssi.webp" alt="Ferssi" width="32" height="32" loading="lazy">Ferssi (GR2 S级范围减伤奶)</strong>，组成 <strong><img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron + <img class="hero-ava" src="img/heroes/olague.webp" alt="Olague" width="32" height="32" loading="lazy">Olague + <img class="hero-ava" src="img/heroes/vortex.webp" alt="Vortex" width="32" height="32" loading="lazy">Vortex + <img class="hero-ava" src="img/heroes/ferssi.webp" alt="Ferssi" width="32" height="32" loading="lazy">Ferssi + <img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow + <img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut/<img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex</strong> 即可稳刷；等英雄之路拿到 <strong><img class="hero-ava" src="img/heroes/volka.webp" alt="Volka" width="32" height="32" loading="lazy">Volka</strong> 后再冲击 18+。</li>
             </ul>
           </li>
           <li><strong>Guild Boss (公会 Boss 日常打满拿最高箱)</strong>：
             <ul>
-              <li><strong>Venoma + Hex (Spirit Siphon主力输出) + Hatssut + Idril + Estrid + Hollow + Laurel + Baron</strong>。</li>
+              <li><strong><img class="hero-ava" src="img/heroes/venoma.webp" alt="Venoma" width="32" height="32" loading="lazy">Venoma + <img class="hero-ava" src="img/heroes/hex.webp" alt="Hex" width="32" height="32" loading="lazy">Hex (Spirit Siphon主力输出) + <img class="hero-ava" src="img/heroes/hatssut.webp" alt="Hatssut" width="32" height="32" loading="lazy">Hatssut + <img class="hero-ava" src="img/heroes/idril.webp" alt="Idril" width="32" height="32" loading="lazy">Idril + <img class="hero-ava" src="img/heroes/estrid.webp" alt="Estrid" width="32" height="32" loading="lazy">Estrid + <img class="hero-ava" src="img/heroes/hollow.webp" alt="Hollow" width="32" height="32" loading="lazy">Hollow + <img class="hero-ava" src="img/heroes/laurel.webp" alt="Laurel" width="32" height="32" loading="lazy">Laurel + <img class="hero-ava" src="img/heroes/baron.webp" alt="Baron" width="32" height="32" loading="lazy">Baron</strong>。</li>
             </ul>
           </li>
         </ul>
@@ -1101,17 +1244,22 @@ ightarrow$ <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围
               <li><strong>红钻唯一用途</strong>：<strong>只买打折的「蓝水晶 (Rare Summoning Crystal)」</strong>（买来只囤不抽，备战悟空池）！后期开了神话装线再买打折大体力药。<strong>红钻绝不买原价商品、徽章、自动券！</strong></li>
             </ul>
           </li>
-          <li><strong>公会商店 (Guild Shop)</strong>：每周必清空 <strong>传说技能结晶 (Legendary Skill Crystal)</strong> $
-ightarrow$ 神话神器精华 $
-ightarrow$ 红晶/蓝晶。</li>
+          <li><strong>公会商店 (Guild Shop)</strong>：每周必清空 <strong>传说技能结晶 (Legendary Skill Crystal)</strong> → 神话神器精华 → 红晶/蓝晶。</li>
           <li><strong>竞技场商店 (Arena Shop)</strong>：每日买体力、自动券、蓝晶；攒币换技能结晶与红晶。</li>
           <li><strong>好友商店</strong>：每天互送好友点，全部换 <strong>体力 (Stamina)</strong>！</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="card-title"><span>🎁 Fastidious.gg 隐藏成就 (Secret Achievements) 顺手白嫖</span><span class="pill pill-gold">免费领钻</span></div>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">游戏内不显示条件，做完直接弹窗领红钻/奖励：</p>
+        <div class="card-title">
+          <span>🎁 Fastidious.gg 隐藏成就 (Secret Achievements) 顺手白嫖</span>
+          <span style="display:inline-flex; gap:6px; align-items:center; flex-shrink:0;">
+            <span class="unverified">⚠️ 未核实</span>
+            <span class="pill pill-gold">免费领钻</span>
+          </span>
+        </div>
+        <p class="unverified-note">成就条件未经核实。Borut 是 3★ 英雄，不一定是商店里的矮人。</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">下列为未核实转述（游戏内不显示条件，据说做完会弹窗领奖励）：</p>
         <div id="secret-list">
           <label class="todo-item"><input type="checkbox" data-id="s1"><span><strong>Window Shopper</strong>：打开矮人黑市商店，什么都不买，停留在界面挂机发呆 <strong>2 分钟</strong>。</span></label>
           <label class="todo-item"><input type="checkbox" data-id="s2"><span><strong>Cheers!</strong>：在矮人黑市界面，用手指连续点击矮人老板 <strong>Borut 100 下</strong>。</span></label>
@@ -1139,7 +1287,7 @@ ightarrow$ 红晶/蓝晶。</li>
         <li><strong>绝不把 Veyrathia 当狗粮喂掉，也别给她喂传说技能石</strong>（保持 5★P5 过渡，等 Day 14 Wrath 接班）。</li>
         <li><strong>绝不把那两件 <code>Shadow Gaze (+10)</code> 合成一件</strong>（Hatssut 和 Maul 一人一件收益远大于合星）。</li>
         <li><strong>绝不重仓强化 <code>Tidal Ring</code>、<code>Rage Chain</code> 或 <code>The Watchguard's Fortune</code></strong>（留着撑白字和凑 8 件金/红神器任务即可）。</li>
-        <li><strong>绝不在现阶段开启 Auto-Equip 或导入 Fastidious Endgame 过滤码</strong>（会卖光你的开荒散件）。</li>
+        <li><strong>绝不在现阶段开启 Auto-Equip</strong>（会卖光你的开荒散件）。</li>
         <li><strong>绝不用红钻买黑市里的徽章/自动战斗券，或买商城直购大礼包</strong>（红钻只买黑市打折蓝水晶，氪金只续月卡）。</li>
         <li><strong>绝不以为全局只有 1 个 Lord 位</strong>（Team 1 和 Team 2 各有独立队长槽，合理分行吃满双光环）。</li>
         <li><strong>绝不在解锁 N9-7 (EXP8) 和 H6-3 (Gold5) 之前猛刷低层经验金币本</strong>（先推通主线节点再开双倍刷）。</li>
@@ -1147,6 +1295,18 @@ ightarrow$ 红晶/蓝晶。</li>
       </ol>
     </div>
   </section>
+
+  <!--
+    新英雄缩略图：打开该英雄的 fastidious.gg 页面，取 hero.image_card_micro，存成 img/heroes/<slug>.webp。
+    若没有 micro 图标，用 Wiki 的 File:<Name>_portrait.png，下载后转成 90×90 webp，并在后面垫 img/frames/<rarity>-90.webp。
+    Fastidious 把 Erlang Shen 标成 Legendary，所以用 legendary-90.webp；没有卡框的远古/神话立绘才用 .r-mythic 红框。
+    名字旁的 N★ 用 img/frames/<rarity>-star-wiki.webp，数字留在 title 和 .sr-only 里。详见 README.md。
+    Veyrathia（史诗）/ Nerissa（传说）用的是 Wiki 立绘加对应方框。Erlang Shen 的图在仓库里，正文还没写到。
+  -->
+  <footer class="site-footer">
+    <div>数据源优先级：游戏内 &gt; Fastidious.gg &gt; Wiki（Fandom，稀有度/梯队可能过时）· 最后更新 2026-10-25</div>
+    <div>Hero portraits © Moonton / Watcher of Realms · thumbnails, frames &amp; icons via fastidious.gg &amp; Watcher of Realms Wiki</div>
+  </footer>
 
 </main>
 
@@ -1165,13 +1325,6 @@ ightarrow$ 红晶/蓝晶。</li>
     });
   }
 
-  // Copy Gear Code
-  function copyText(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('已复制导入码: ' + text);
-    });
-  }
-
   // Persistent Checklists via localStorage
   const checkboxes = document.querySelectorAll('input[type="checkbox"][data-id]');
   checkboxes.forEach(cb => {
@@ -1184,6 +1337,22 @@ ightarrow$ 红晶/蓝晶。</li>
       localStorage.setItem(id, cb.checked);
       cb.closest('.todo-item').classList.toggle('done', cb.checked);
     });
+  });
+
+  document.querySelectorAll('img.hero-ava').forEach(img => {
+    const showFallback = () => {
+      if (img.dataset.fallbackApplied) return;
+      img.dataset.fallbackApplied = '1';
+      const fb = document.createElement('span');
+      fb.className = 'hero-ava hero-ava-fallback';
+      const name = img.alt || '?';
+      const parts = name.trim().split(/\s+/);
+      fb.textContent = parts.length >= 2 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.slice(0, 2);
+      fb.setAttribute('aria-hidden', 'true');
+      img.replaceWith(fb);
+    };
+    img.addEventListener('error', showFallback);
+    if (img.complete && img.naturalWidth === 0) showFallback();
   });
 
   function resetChecklists() {
