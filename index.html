@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watcher of Realms · 专属养成与战术指挥中心 (Lv40 Day5+)</title>
+<style>
+  :root {
+    --bg-main: #0b0e14;
+    --bg-card: #131822;
+    --bg-card-hover: #1a2130;
+    --bg-sidebar: #0e121a;
+    --border-color: #263042;
+    --text-main: #e6edf3;
+    --text-muted: #8b949e;
+    --accent-gold: #f59e0b;
+    --accent-gold-bg: rgba(245, 158, 11, 0.12);
+    --accent-red: #ef4444;
+    --accent-red-bg: rgba(239, 68, 68, 0.14);
+    --accent-purple: #a855f7;
+    --accent-purple-bg: rgba(168, 85, 247, 0.14);
+    --accent-blue: #3b82f6;
+    --accent-blue-bg: rgba(59, 130, 246, 0.14);
+    --accent-green: #10b981;
+    --accent-green-bg: rgba(16, 185, 129, 0.14);
+    --accent-cyan: #06b6d4;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar Navigation */
+  .sidebar {
+    width: 260px;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    padding: 20px 14px;
+    z-index: 100;
+  }
+
+  .brand {
+    padding: 8px 12px 18px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 16px;
+  }
+
+  .brand h1 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    letter-spacing: 0.5px;
+  }
+
+  .brand p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .nav-group-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 12px 6px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.86rem;
+    border-radius: 6px;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+    cursor: pointer;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    background-color: var(--bg-card-hover);
+    color: var(--accent-gold);
+  }
+
+  .nav-badge {
+    margin-left: auto;
+    font-size: 0.7rem;
+    padding: 1px 6px;
+    border-radius: 10px;
+    background: var(--accent-blue-bg);
+    color: var(--accent-blue);
+    font-weight: 600;
+  }
+
+  /* Main Content */
+  .main-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 28px 36px 60px;
+    max-width: 1280px;
+  }
+
+  /* Top Hero Banner */
+  .hero-banner {
+    background: linear-gradient(135deg, #171f30 0%, #101520 100%);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--accent-gold);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 24px;
+  }
+
+  .hero-banner-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-banner h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .status-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .pill {
+    font-size: 0.78rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid transparent;
+  }
+
+  .pill-gold { background: var(--accent-gold-bg); color: var(--accent-gold); border-color: rgba(245,158,11,0.3); }
+  .pill-red { background: var(--accent-red-bg); color: var(--accent-red); border-color: rgba(239,68,68,0.3); }
+  .pill-purple { background: var(--accent-purple-bg); color: var(--accent-purple); border-color: rgba(168,85,247,0.3); }
+  .pill-blue { background: var(--accent-blue-bg); color: var(--accent-blue); border-color: rgba(59,130,246,0.3); }
+  .pill-green { background: var(--accent-green-bg); color: var(--accent-green); border-color: rgba(16,185,129,0.3); }
+
+  /* Sections */
+  section {
+    margin-bottom: 36px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .section-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+
+  .section-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* Grid Cards */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+
+  .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card p, .card li {
+    font-size: 0.86rem;
+    color: var(--text-main);
+  }
+
+  .card ul {
+    padding-left: 18px;
+    margin-top: 6px;
+  }
+
+  .card li {
+    margin-bottom: 4px;
+  }
+
+  .callout {
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    border-left: 4px solid;
+    font-size: 0.86rem;
+  }
+
+  .callout-warn { background: var(--accent-gold-bg); border-color: var(--accent-gold); }
+  .callout-danger { background: var(--accent-red-bg); border-color: var(--accent-red); }
+  .callout-info { background: var(--accent-blue-bg); border-color: var(--accent-blue); }
+  .callout-success { background: var(--accent-green-bg); border-color: var(--accent-green); }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    text-align: left;
+  }
+
+  th {
+    background-color: #182030;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(38, 48, 66, 0.6);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background-color: rgba(255, 255, 255, 0.02); }
+
+  /* Tier Badges */
+  .tier {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-align: center;
+    min-width: 32px;
+  }
+  .tier-sss { background: #ef4444; color: #fff; }
+  .tier-ss { background: #f97316; color: #fff; }
+  .tier-sp { background: #f59e0b; color: #000; }
+  .tier-s { background: #eab308; color: #000; }
+  .tier-ap { background: #a855f7; color: #fff; }
+  .tier-a { background: #3b82f6; color: #fff; }
+  .tier-bp { background: #06b6d4; color: #000; }
+  .tier-b { background: #10b981; color: #000; }
+  .tier-c { background: #64748b; color: #fff; }
+  .tier-d { background: #475569; color: #cbd5e1; }
+  .tier-f { background: #1e293b; color: #ef4444; border: 1px solid #ef4444; }
+
+  /* Interactive Elements */
+  .btn {
+    background-color: var(--accent-blue);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn-gold { background-color: var(--accent-gold); color: #000; }
+  .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+  .btn-outline.active { background: var(--accent-gold); color: #000; border-color: var(--accent-gold); }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .code-box {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    background: #090c10;
+    border: 1px solid var(--border-color);
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Progress Bar */
+  .pity-bar-wrap {
+    background: #090c10;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 8px 0;
+    border: 1px solid var(--border-color);
+  }
+  .pity-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  /* Checklists */
+  .todo-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .todo-item:hover { background: rgba(255,255,255,0.03); }
+  .todo-item input[type="checkbox"] {
+    margin-top: 4px;
+    accent-color: var(--accent-green);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+  .todo-item.done span {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
+    body { flex-direction: column; }
+    .main-content { margin-left: 0; padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="brand">
+    <h1>⚔️ WOR 战术指挥中心</h1>
+    <p>Lv40 · Day5+ · 整合 Fastidious.gg 实测库</p>
+  </div>
+
+  <div class="nav-group-title">核心总览</div>
+  <a class="nav-link" href="#sec-conclusions">🎯 先看结论 (6大铁律)</a>
+  <a class="nav-link" href="#sec-snapshot">📸 账号快照 & 保底监控 <span class="nav-badge">175/200</span></a>
+  <a class="nav-link" href="#sec-calendar">📅 抽卡与活动日历</a>
+
+  <div class="nav-group-title">英雄与养成</div>
+  <a class="nav-link" href="#sec-roster">🦸 全卡池盘点 & 3★去留</a>
+  <a class="nav-link" href="#sec-priority">📈 养成优先级 & 觉醒店排期</a>
+  <a class="nav-link" href="#sec-wishlist">🌟 Fastidious 愿望单 & BP秘密</a>
+
+  <div class="nav-group-title">装备与神器 (Fastidious校验)</div>
+  <a class="nav-link" href="#sec-gear">🛡️ 装备 Manage Plan & 导入码</a>
+  <a class="nav-link" href="#sec-artifacts">🏺 神器库存 & 真实评级修正 <span class="nav-badge">已纠偏</span></a>
+
+  <div class="nav-group-title">副本、编队与运营</div>
+  <a class="nav-link" href="#sec-raids">🏰 副本进度 & 英雄之路14-18</a>
+  <a class="nav-link" href="#sec-teams">♟️ 双Lord编队 & GR3-18阵型</a>
+  <a class="nav-link" href="#sec-oracle">🏆 神谕试炼 (Arrival榜一)</a>
+  <a class="nav-link" href="#sec-shop">🛒 商店/资源/氪金 & 隐藏成就</a>
+  <a class="nav-link" href="#sec-pitfalls">🚫 12条绝对别踩的坑</a>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content">
+
+  <!-- Top Banner -->
+  <div class="hero-banner">
+    <div class="hero-banner-top">
+      <div>
+        <h2>Watcher of Realms · 新手养成与 Fastidious 权威数据手册</h2>
+        <p style="color: var(--text-muted); font-size: 0.86rem; margin-top: 4px;">
+          账号里程碑：Lv40 已达成 · <strong>Olague (4★史诗坦)</strong> & <strong>Ferssi (5★传说奶)</strong> 已到手 · Arrival of Heroes 榜一结算
+        </p>
+      </div>
+      <button class="btn btn-outline" onclick="resetChecklists()">🔄 重置本地任务勾选</button>
+    </div>
+    <div class="status-pills">
+      <span class="pill pill-blue">💎 蓝晶: 0 (Pity = 175/200 · 差5进软保)</span>
+      <span class="pill pill-gold">🌟 金晶: 9+1=10 (Pity = 9/20 · 差3进软保)</span>
+      <span class="pill pill-red">🩸 红晶: 7+3=10 (未抽囤货)</span>
+      <span class="pill pill-green">🏹 GR3: Stage 15 (3★可刷)</span>
+      <span class="pill pill-purple">🌊 Tide: Wave 12 → 冲 Wave 30 (Path #14)</span>
+    </div>
+  </div>
+
+  <!-- 1. 先看结论 -->
+  <section id="sec-conclusions">
+    <div class="section-header">
+      <div class="section-title">🎯 一、 先看结论（当前阶段 6 大最高行动纲领）</div>
+      <div class="section-sub">基于 10-24 晚最新抽卡记录与 Lv40 节点</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card" style="border-left: 4px solid var(--accent-blue);">
+        <div class="card-title">
+          <span>1. 蓝晶 Pity = 175：一抽不打，锁死带进悟空池 (10-30~11-01)</span>
+          <span class="pill pill-blue">最高纪律</span>
+        </div>
+        <p>10-24 Arrival 冲榜抽空后，第6页第26格出 <strong>Ferssi</strong>，当前累计 <strong>150 + 25 = 175 抽</strong>（再5抽进180软保底，每抽+5%，第200抽必出）。</p>
+        <ul>
+          <li><strong>跨池继承机制</strong>：所有蓝水晶池共用同一条传说 Pity！千万别在常驻池贪那5~25抽“兑现”。</li>
+          <li><strong>悟空池策略</strong>：虽然攒不够200抽硬保底，但利用 <strong>175 共用 Pity</strong> 在悟空池最多 25 抽内必拿 1 个传说（享 <strong>×20 概率出孙悟空</strong>）！</li>
+          <li><strong>备选退路</strong>：若悟空池结束前没凑够出金，这笔高 Pity 直接顺延带进 <strong>Elowyn 池 (Day 19-21)</strong>。红钻只买黑市打折蓝水晶。</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--accent-gold);">
+        <div class="card-title">
+          <span>2. 金晶 Pity = 9（手握 9+1=10 张）：等 ×2 或目标 UP 池</span>
+          <span class="pill pill-gold">稳拿1金</span>
+        </div>
+        <p>金色召唤（Divine）软保底 <strong>12抽</strong>（之后每抽+5%），硬保底 <strong>20抽</strong>。你当前 Pity = 9，手里加上 Arrival 里程碑共 <strong>10 张金票</strong>。</p>
+        <ul>
+          <li><strong>数学期望</strong>：10 张金票能从 Pity 9 直接抽到 Pity 19（深入软保底区，几乎必定出 1 个传说；100%硬保需11张）。</li>
+          <li><strong>操作铁律</strong>：绝不打普通无加成常驻金池！留到 <strong>×2 Divine 双倍概率池</strong> 或有核心人权卡的 <strong>Special Divine ×20</strong> 一次性清空。</li>
+          <li><strong>红晶 (Ancient)</strong>：现有 7 张 + Arrival 榜一奖励 3 张 = <strong>10 张</strong>，继续死囤。</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--accent-purple);">
+        <div class="card-title">
+          <span>3. 升 6★ 队列：Baron / Hollow / Vortex 优先，Olague 先 5★P5</span>
+          <span class="pill pill-purple">狗粮规划</span>
+        </div>
+        <ul>
+          <li><strong>三大 6★P6 射手已就位</strong>：<strong>Hatssut (6★P6 A1)</strong>、<strong>Hex (6★P6 A1)</strong>、<strong>Idril (6★P6 A1)</strong> 已经全部毕业！</li>
+          <li><strong>下一批 6★ 顺序</strong>：优先 <strong>Baron (已满觉 A5)</strong> $
+ightarrow$ <strong>Hollow / Vortex / Ferssi</strong> $
+ightarrow$ <strong>Olague</strong> 接在后面。</li>
+          <li><strong>为什么 Olague 暂缓 6★？</strong> 升1个6★需约 236 万 EXP + 5个5★狗粮。Olague 刚拿（4★），先拉到 <strong>5★满级 + P5</strong> 即可稳扛 Void Rift 和主线；<strong>Laurel 已 5★P5 星级毕业，永远不要升 6★！</strong></li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--accent-green);">
+        <div class="card-title">
+          <span>4. 神器/推图/Tide 每日三件事</span>
+          <span class="pill pill-green">日常节奏</span>
+        </div>
+        <ul>
+          <li><strong>神器分配</strong>：<code>Spirit Siphon (+8→+13)</code> 锁死 <strong>Hex</strong>；<code>Idril's Gaze (+8→+10)</code> 锁死 <strong>Idril</strong>；<code>Shadow Gaze (+10)×2</code> 分给 <strong>Hatssut</strong> 和 <strong>Maul</strong>；<code>Keen Wisdom (+19)</code> 给缺神器的输出/法师（或给 Hollow 撑攻击）。</li>
+          <li><strong>推主线开资源高层</strong>：先推 <strong>Campaign N9-7（解锁 EXP Raid 8）</strong> 与 <strong>H6-3（解锁 Gold Raid 5）</strong>，高层资源本靠主线节点解锁，不是靠刷上一层！</li>
+          <li><strong>Tide 每日3次打满</strong>：目前 Wave 12，英雄之路第14关要求 <strong>通关 Tide Wave 30</strong>（受每日3次限制，需连打几天解锁后续拿 Volka）。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 账号快照 & 保底监控 -->
+  <section id="sec-snapshot">
+    <div class="section-header">
+      <div class="section-title">📸 二、 账号全景快照 & 抽卡 Pity 实时进度条</div>
+      <div class="section-sub">数据基准：2026-10-24 晚 (Asia/Singapore)</div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom: 16px;">
+      <div class="card">
+        <div class="card-title"><span>🔵 稀有召唤 (蓝水晶 Rare)</span><span style="color:var(--accent-blue)">175 / 200</span></div>
+        <div class="pity-bar-wrap"><div class="pity-bar-fill" style="width: 87.5%; background: var(--accent-blue);"></div></div>
+        <p style="font-size:0.8rem; color:var(--text-muted);">软保底: 180 (差5抽) | 硬保底: 200 (差25抽)<br>最新出金: 第6/12页从上第26格 <strong>Ferssi</strong>。库存: <strong>0蓝 / 119红钻(+60待领)</strong>。</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>🟡 神圣召唤 (金水晶 Divine)</span><span style="color:var(--accent-gold)">9 / 20</span></div>
+        <div class="pity-bar-wrap"><div class="pity-bar-fill" style="width: 45%; background: var(--accent-gold);"></div></div>
+        <p style="font-size:0.8rem; color:var(--text-muted);">软保底: 12 (差3抽) | 硬保底: 20 (差11抽)<br>最新出金: Beginner's Divine 第4页第1格。库存: <strong>9张 + 里程碑1张 = 10张</strong>。</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>🔴 远古召唤 (红水晶 Ancient)</span><span style="color:var(--accent-red)">0 / 200</span></div>
+        <div class="pity-bar-wrap"><div class="pity-bar-fill" style="width: 5%; background: var(--accent-red);"></div></div>
+        <p style="font-size:0.8rem; color:var(--text-muted);">领袖软/硬: 185/200 | 非领袖软/硬: 130/150 (独立轨)<br>当前状态: 未抽 (N/A)。库存: <strong>7张 + Arrival榜一3张 = 10张</strong>（继续囤）。</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>当前状态 / 进度</th>
+            <th>关键细节与下一步动作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>注册与等级</strong></td>
+            <td>2026-10-20 注册 · <strong>Lv40 (Day 5 达成)</strong></td>
+            <td>已解锁虚空裂隙 (Void Rift) 并成功领出 <strong>Olague</strong>；向 Lv45/50 迈进。</td>
+          </tr>
+          <tr>
+            <td><strong>主线 Campaign</strong></td>
+            <td>Normal <strong>N9-1</strong> · Hard <strong>H6-1</strong> · Expert <strong>E2-1</strong></td>
+            <td>🔥 <strong>第一优先</strong>：推通 <code>N9-7</code> 开启 EXP8，推通 <code>H6-3</code> 开启 Gold5！</td>
+          </tr>
+          <tr>
+            <td><strong>装备与材料副本</strong></td>
+            <td><strong>GR3 = 15 (3★)</strong> · GR1 = 13 · GR2 = 12 · AMR = 10</td>
+            <td>EXP Raid = 7 · Gold Raid = 4 · 晋级本：法/射 Extreme 2、坦奶 Extreme 1、近战 Stage 13。</td>
+          </tr>
+          <tr>
+            <td><strong>核心觉醒 (Awakening)</strong></td>
+            <td><strong>Baron A5 (满)</strong> · <strong>Maul A4</strong> · <strong>Vortex A3</strong> · <strong>Marri A3</strong></td>
+            <td>传说/主力觉醒：<strong>Hatssut A1</strong> · <strong>Hex A1</strong> · <strong>Idril A1</strong> · Estrid A2 · Voroth A2 · Hollow A1 · Pyros A1。</td>
+          </tr>
+          <tr>
+            <td><strong>Tide / 裂隙 / 圣典</strong></td>
+            <td>Tide <strong>Wave 12</strong> · Void Rift <strong>序章 1-2</strong> · Codex <strong>未开</strong></td>
+            <td>英雄之路卡在第14步（要求 Tide Wave 30）；不朽圣典 (Immortal Codex) 倒计时约 15天18小时（11月初开放，暂不管）。</td>
+          </tr>
+          <tr>
+            <td><strong>特权与战令状态</strong></td>
+            <td>钻石月卡 (剩26天) · Privilege (剩≈206天) · Dragon Pass (已开)</td>
+            <td>轻氪高性价比配置已齐，后续仅续钻石月卡即可，靠纪律囤 Pity 拿人权卡。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. 日历 -->
+  <section id="sec-calendar">
+    <div class="section-header">
+      <div class="section-title">📅 三、 关键卡池与节点日历（以 10-20 注册为基准）</div>
+      <div class="section-sub">精准卡点每一颗蓝水晶</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>预计日期</th>
+            <th>建号天数</th>
+            <th>卡池 / 核心事件</th>
+            <th>战略动作指令</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>10-24 ~ 10-26</strong></td>
+            <td>Day 5 ~ 7</td>
+            <td><strong>Hex UP 池</strong> & Arrival 榜一结算 (10-26 15:30)</td>
+            <td>Hex 已有 6★P6 A1，<strong>直接跳过不抽</strong>！周一下午领 Arrival 榜一大奖（传说技能晶喂 Hatssut，3红晶+1金晶入库）。</td>
+          </tr>
+          <tr style="background: rgba(245, 158, 11, 0.08);">
+            <td><strong>10-30 ~ 11-01</strong></td>
+            <td>Day 11 ~ 13</td>
+            <td>🔥 <strong>Sun Wukong (孙悟空) 限定池</strong> + Silas/Vierna池</td>
+            <td><strong>全力出击！</strong> 把攒下的所有蓝晶全部砸进悟空池，利用 <strong>175 共用 Pity</strong> 在 5~25 抽内必博 1 个传说（×20 悟空概率）！</td>
+          </tr>
+          <tr>
+            <td><strong>约 11-02</strong></td>
+            <td>Day 14</td>
+            <td>🔥 <strong>14天签到送 Wrath (愤怒 - 梦魇领主)</strong></td>
+            <td>正式替换 Veyrathia 的队长位，作为 Team 2 的核心 Nightmare Lord 培养（Day 42 还会送魂石保送高觉）。</td>
+          </tr>
+          <tr>
+            <td><strong>约 11-07 ~ 11-09</strong></td>
+            <td>Day 19 ~ 21</td>
+            <td>🌟 <strong>Elowyn (艾洛温 - S+全图回怒神奶) 池</strong></td>
+            <td>悟空池之后的头号蓝池目标！全游最强机制奶妈。</td>
+          </tr>
+          <tr>
+            <td><strong>约 11-13 ~ 11-16</strong></td>
+            <td>Day 25 ~ 28</td>
+            <td><strong>Nerissa / Vorn 新手池</strong> + <strong>Day 28 签到送 Greed (贪婪)</strong></td>
+            <td>Day 28 免费领 A+ 级群攻减速法师 <strong>Greed</strong>，直接补齐 GR1（装备本1）主力拼图。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. 全卡池盘点 & 3★去留 -->
+  <section id="sec-roster">
+    <div class="section-header">
+      <div class="section-title">🦸 四、 账号全英雄盘点 & 3★ 稀有卡去留铁律</div>
+      <div class="section-sub">点击下方职业按钮可快速筛选你的英雄池</div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="btn btn-outline active" onclick="filterRoster('all', this)">全部职业</button>
+      <button class="btn btn-outline" onclick="filterRoster('Marksman', this)">🏹 射手 (Marksman)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Fighter', this)">⚔️ 战士 (Fighter)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Defender', this)">🛡️ 坦克 (Defender)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Mage', this)">🔮 法师 (Mage)</button>
+      <button class="btn btn-outline" onclick="filterRoster('Healer', this)">💚 治疗 (Healer)</button>
+    </div>
+
+    <div class="table-wrap" style="margin-bottom: 18px;">
+      <table id="roster-table">
+        <thead>
+          <tr>
+            <th>职业</th>
+            <th>主力梯队 (已练 / 核心)</th>
+            <th>功能组件 / 待练 / 合成坯子</th>
+            <th>仓管 / 3★稀有保留</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-role="Marksman">
+            <td><strong>🏹 射手</strong></td>
+            <td>
+              <span class="pill pill-gold">Hatssut 6★P6 A1</span>
+              <span class="pill pill-gold">Hex 6★P6 A1</span>
+              <span class="pill pill-purple">Idril 6★P6 A1</span>
+              <span class="pill pill-purple">Maul 5★P5 A4</span>
+            </td>
+            <td><strong>Theowin</strong>, <strong>Brunor</strong> (锁好1只备合成 Fusion)</td>
+            <td><strong>Kai 5★P1</strong> (Fasti评级低，Skip不喂技能石), Harpun×2, Eliza</td>
+          </tr>
+          <tr data-role="Fighter">
+            <td><strong>⚔️ 战士</strong></td>
+            <td>
+              <span class="pill pill-purple">Estrid 4★P4 A2</span>
+              <span class="pill pill-purple">Veyrathia 5★P5 A0</span>
+            </td>
+            <td><strong>Dalyn 4★</strong> (低费回Cost先锋), <strong>Voroth 4★P4 A2</strong> (史诗紫卡，过渡停手)</td>
+            <td>Janqhar×4, <strong>Borut 3★</strong> (守望者稀有Lord，留1只凑阵营试炼)</td>
+          </tr>
+          <tr data-role="Defender">
+            <td><strong>🛡️ 坦克</strong></td>
+            <td>
+              <span class="pill pill-purple">Baron 5★P5 A5(满)</span>
+              <span class="pill pill-purple">Olague 4★ (刚拿→升5★P5)</span>
+            </td>
+            <td><strong>Livian</strong> (合成材料锁好), Aveline A1, Meriel</td>
+            <td>Rhox, Drayga×2, <strong>Rex 4★P4</strong> (任务升星过的3★稀有，留着凑数)</td>
+          </tr>
+          <tr data-role="Mage">
+            <td><strong>🔮 法师</strong></td>
+            <td>
+              <span class="pill pill-gold">Venoma 5★P5 A0 (Lord)</span>
+              <span class="pill pill-purple">Marri 5★P5 A3</span>
+              <span class="pill pill-purple">Laurel 5★P5 (毕业勿6★)</span>
+            </td>
+            <td><strong>Ai</strong> (GR1冰冻过渡好手), <strong>Pyros A1</strong> (烈焰史诗Lord，留待后养)</td>
+            <td>Nauvras×2, Nisalt, Imani×2, <strong>Voltus 3★P3</strong> (剧情/合成卡，留1只)</td>
+          </tr>
+          <tr data-role="Healer">
+            <td><strong>💚 治疗</strong></td>
+            <td>
+              <span class="pill pill-gold">Ferssi 5★ (传说减伤奶)</span>
+              <span class="pill pill-purple">Hollow 5★P5 A1</span>
+              <span class="pill pill-purple">Vortex 5★P5 A3</span>
+            </td>
+            <td><strong>Nissandei</strong>, <strong>Lili</strong> (保留备阵营试炼双奶条件)</td>
+            <td>— (三大主力奶 Hollow + Vortex + Ferssi 已齐！)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-info">
+      <strong>📌 3★ 稀有英雄去留铁律（结合 Fastidious 与实战）：</strong><br>
+      1. <strong>史诗(4★紫)与传说(5★金)永不遣散、永不当狗粮</strong>：重复卡全部用来点觉醒（Awaken），满觉 A5 后多出来的再分解换觉醒币。<br>
+      2. <strong>以后抽到必锁 1 只的功能型 3★ 蓝卡</strong>：<strong>Autumn (秋天 - 暴击爆伤神辅)</strong>、<strong>Decimus (德西穆斯 - GR2不死替死鬼，Fasti A级)</strong>、<strong>Narvi (纳尔薇 - 回Cost先锋)</strong>、<strong>Camille (合成金卡憎恶必用材料)</strong>、<strong>Elukas (减速冰冻，FT A+)</strong>、<strong>Cuke (毒伤)</strong>，以及 3★ 稀有领主（<strong>Borut / Niro / Dagna</strong>，在没有同阵营高阶领主前留1只打 Faction Trial）。其余重复3★一律 Dismiss 遣散换 <strong>30 红钻/只</strong>！
+    </div>
+  </section>
+
+  <!-- 5. 养成优先级 & 觉醒商店 -->
+  <section id="sec-priority">
+    <div class="section-header">
+      <div class="section-title">📈 五、 本号资源投入优先级 & Fastidious 觉醒商店 24 周轮换表</div>
+      <div class="section-sub">技能石、升6★与觉醒币精准投放</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span>🔥 传说/史诗技能结晶 & 升星序列</span><span class="pill pill-gold">资源分配</span></div>
+        <ul>
+          <li><strong>传说技能结晶 (Legendary Skill Crystal)</strong>：每周公会店必买！第1顺位喂满 <strong>Hatssut</strong> $
+ightarrow$ 第2顺位喂 <strong>Hex</strong> $
+ightarrow$ 第3顺位留给即将抽的 <strong>孙悟空 / Elowyn</strong>（<strong>Ferssi</strong> 和 <strong>Venoma</strong> 先不抢传说技能晶，靠基础技能等级即可工作）。</li>
+          <li><strong>史诗技能结晶 (Epic Skill Crystal)</strong>：优先喂满 <strong>Idril、Hollow、Vortex、Baron、Estrid、Marri</strong>；<strong>Veyrathia</strong> 停在 P5 过渡即可，不砸稀缺资源。</li>
+          <li><strong>Ferssi (新抽到的5★传说奶) 定位</strong>：Fastidious 综合 <strong>A+ 级（GR2 高达 S 级，GB2 A+）</strong>！核心神技是给周围队友提供高额<strong>范围伤害减免 (AoE DMG Reduction)</strong> 与激励，立刻拉到 <strong>5★满级 + P5</strong> 进驻 GR2 和高难本！</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>🏪 Fastidious.gg 觉醒商店 (Awakening Shop) 必买日历</span><span class="pill pill-purple">每周一刷新</span></div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">商店按固定 24 周周期循环（史诗魂石 400 紫币，传说魂石 400 金币）：</p>
+        <ul>
+          <li><strong>本周 (10-19 ~ 10-25)</strong>：正在售卖 <code>Baron</code>（你 Baron 已经 A5 满觉，直接省下 400 紫币！）。</li>
+          <li>🔥 <strong>4周后 (11月16日当周)</strong>：同时刷新 <strong><code>Idril (400紫币)</code> + <code>Laurel (400紫币)</code></strong>！务必留好紫币买 Idril 冲 A3/A5！</li>
+          <li>🔥 <strong>5周后 (11月23日当周)</strong>：同时刷新 <strong><code>Hex (400金币)</code> + <code>Olague (400紫币)</code></strong>！</li>
+          <li><strong>9~11周后 (12月下旬~1月初)</strong>：依次刷新 <code>Marri</code> (12-21) $
+ightarrow$ <code>Maul</code> (12-28，你已A4差1满觉) $
+ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 愿望单 & BP秘密 -->
+  <section id="sec-wishlist">
+    <div class="section-header">
+      <div class="section-title">🌟 六、 Fastidious 全英雄愿望单对照 & 战力 (BP) 逆向工程秘密</div>
+      <div class="section-sub">区分 Fastidious 综合梯度与本号刚需</div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 16px;">
+      <div class="card">
+        <div class="card-title"><span>📋 核心愿望单状态速查</span></div>
+        <p style="font-size:0.83rem; margin-bottom:8px;">Fastidious 天梯从高到低为：<code>SSS</code> &gt; <code>SS</code> &gt; <code>S+</code> &gt; <code>S</code> &gt; <code>A+</code> &gt; <code>A</code> &gt; <code>B+</code></p>
+        <ul>
+          <li><span class="tier tier-sp">S+</span> <strong>已拥有</strong>：<strong>Hatssut</strong> (6★P6 A1) | <strong>待追目标</strong>：<strong>Elowyn</strong> (Day19-21)、<strong>Silas</strong>、<strong>Nerissa</strong> (Day25-28)</li>
+          <li><span class="tier tier-s">S</span> <strong>已拥有</strong>：<strong>Idril</strong> (6★P6 A1)、<strong>Hollow</strong> (5★P5 A1) | <strong>待拿</strong>：<strong>Sun Wukong</strong> (10-30池)、<strong>Volka</strong> (英雄之路#18)、<strong>Vierna</strong></li>
+          <li><span class="tier tier-ap">A+</span> <strong>已拥有</strong>：<strong>Hex</strong> (GB/Boss战 S级)、<strong>Ferssi</strong> (GR2 S级)、<strong>Vortex</strong> (A3)、<strong>Olague</strong>、<strong>Marri</strong> (A3)、<strong>Estrid</strong> (A2)、<strong>Veyrathia</strong> | <strong>待拿</strong>：<strong>Greed</strong> (Day28签到)</li>
+          <li><span class="tier tier-a">A / B+</span> <strong>刚需核心</strong>：<strong>Baron</strong> (已A5)、<strong>Venoma</strong> (双队Lord)、<strong>Maul</strong> (A4)、<strong>Laurel</strong> (B+但回怒机制唯一真神)、<strong>Dolores</strong> (A级但高难破防必备)、<strong>Wrath</strong> (Day14领)。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>🧮 Fastidious 逆向工程：如何快速拉高 BP 碾压 Tide Wave 30？</span><span class="pill pill-cyan" style="background:rgba(6,182,212,0.15);color:#06b6d4;">硬核机制</span></div>
+        <p style="font-size:0.83rem; margin-bottom:8px;">你当前英雄之路第14关被 <strong>Tide Wave 30</strong> 卡住，而 Tide 胜负高度取决于全队面板总 BP！Fastidious 拆解 748 个英雄得出的 <strong>BP 暴涨公式</strong>：</p>
+        <ul>
+          <li><strong>1. 紫星晋级 (Promotion) 权重是升星的 3 倍</strong>：在 BP 公式 <code>(基础+装备)×技能乘区</code> 中，点满 P6 提供高达 <code>+6.050</code> 的乘区加成（而升6★仅 <code>+2.100</code>）！把上阵英雄的 Promotion 刷满是涨 BP 最快手段。</li>
+          <li><strong>2. 脆皮职业穿防御装加 4 倍虚胖 BP</strong>：射手/法师/奶妈的防御力 (DEF) 战力权重是坦克的 4 倍以上。打 Tide 那几分钟，给替补英雄塞满高强化紫/红装和神器，打完再扒下来！</li>
+          <li><strong>3. 技能等级与专属神器</strong>：每升1级技能（无论主动被动）固定增加 <code>50~150 基础 BP</code>，再被装备百分比放大。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 装备 Manage Plan -->
+  <section id="sec-gear">
+    <div class="section-header">
+      <div class="section-title">🛡️ 七、 装备 Manage Plan（Gemini 四规则 + Fastidious 官方配装与导入码）</div>
+      <div class="section-sub">保留全部极品散件，杜绝误卖</div>
+    </div>
+
+    <div class="callout callout-success">
+      <strong>✅ 结论：你目前已设好的 4 条自定义规则（Set=ALL，Essential留空，关闭Auto-Equip）完全正确，继续保持！</strong><br>
+      同时记住：<strong>Ancient（带红/金闪光边框的远古装备，如你那件 +12 双紫条 +66攻速/+25.5%回怒 的 Mana Spring 奶妈装）</strong> 在自动战斗卖装时受系统底层保护不会被卖，进包后顺手点上 <strong>🔒 小锁头</strong> 即可。
+    </div>
+
+    <div class="table-wrap" style="margin-bottom: 16px;">
+      <table>
+        <thead>
+          <tr>
+            <th>规则名称 (Rule)</th>
+            <th>部位 (Slot)</th>
+            <th>套装 (Set)</th>
+            <th>主属性 (Main Stat)</th>
+            <th>副词条池 (Sub-stats · 保持 Essential 留空)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. R-DPS</strong> (右三输出)</td>
+            <td>手镯 / 项链 / 戒指</td>
+            <td><strong>Select All</strong></td>
+            <td><code>ATK Bonus %</code>, <code>Crit. Rate %</code>, <code>Crit. DMG %</code></td>
+            <td><code>ATK Bonus %</code>, <code>Crit. Rate %</code>, <code>Crit. DMG %</code>, <code>ATK SPD</code>, <code>Rage Regen</code></td>
+          </tr>
+          <tr>
+            <td><strong>2. R-SPD</strong> (右三攻速回怒)</td>
+            <td>手镯 / 项链 / 戒指</td>
+            <td><strong>Select All</strong></td>
+            <td><code>ATK SPD</code>, <code>Rage Regen %</code></td>
+            <td><code>ATK Bonus %</code>, <code>HP Bonus %</code>, <code>ATK SPD</code>, <code>Rage Regen %</code></td>
+          </tr>
+          <tr>
+            <td><strong>3. R-TANK</strong> (右三坦奶血防)</td>
+            <td>手镯 / 项链 / 戒指</td>
+            <td><strong>Select All</strong></td>
+            <td><code>HP Bonus %</code>, <code>DEF Bonus %</code></td>
+            <td><code>HP Bonus %</code>, <code>DEF Bonus %</code>, <code>ATK SPD</code>, <code>Rage Regen %</code></td>
+          </tr>
+          <tr>
+            <td><strong>4. L-All</strong> (左二通用好胚)</td>
+            <td>武器 / 胸甲</td>
+            <td><strong>Select All</strong></td>
+            <td><em>固定白字 ATK / HP (无需选)</em></td>
+            <td><code>ATK Bonus %</code>, <code>Crit. Rate %</code>, <code>Crit. DMG %</code>, <code>ATK SPD</code>, <code>HP Bonus %</code> (命中≥2)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span>📐 Fastidious Stage 1 (开荒期) 权威配装细节</span></div>
+        <ul>
+          <li><strong>主力输出 (Hatssut / Hex / Idril / Maul / Estrid)</strong>：Fastidious 推荐开荒期右三件主属性优先穿 <strong>3 件 <code>ATK Bonus %</code></strong>（靠副词条凑暴击率和攻速；若副词条暴击太低再穿 1 件暴击率主属性）。</li>
+          <li><strong>副词条真实收益排序</strong>：在 Stage 1 开荒期，<code>ATK SPD</code> &gt; <code>Crit. Rate %</code> &gt; <strong><code>Flat ATK (固定攻击)</code></strong> &gt; <code>Crit. DMG %</code>！因为前期跨过怪物防御门槛第一重要，歪出固定攻击力完全可用！</li>
+          <li><strong>Hollow (攻击奶) 配装提醒</strong>：不要长期只穿纯 R-SPD 主属性，右三件采用 <strong><code>ATK%</code> + <code>ATK%</code> + 你那件 <code>+66攻速远古装</code></strong>，兼顾奶量与机关枪回怒。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>📋 Fastidious.gg 官方导入码 (备存至 GR18+ 使用)</span></div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;">注意：<strong>现阶段不要启用 Endgame 码</strong>（会卖掉你的过渡红装），保存在此供你通关 GR3-18 后一键导入新方案参考：</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div>
+            <span style="font-size:0.82rem; margin-right:8px;">中后期过滤码 (Mid/Late)：</span>
+            <span class="code-box">ODMyMTg= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMTg=')">复制</button></span>
+          </div>
+          <div>
+            <span style="font-size:0.82rem; margin-right:8px;">大后期过滤码 (Late/End)：</span>
+            <span class="code-box">ODMyMjA= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMjA=')">复制</button></span>
+          </div>
+          <div>
+            <span style="font-size:0.82rem; margin-right:8px;">Fasti 个人终极码 (Endgame)：</span>
+            <span class="code-box">ODMyMjM= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMjM=')">复制</button></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 神器库存 & 真实评级修正 -->
+  <section id="sec-artifacts">
+    <div class="section-header">
+      <div class="section-title">🏺 八、 神器库存分配 & Fastidious.gg 官方评级终极校验表</div>
+      <div class="section-sub">已将两份资料完美对齐，修正全部职业限定与真实特效</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>神器名称 & 库存</th>
+            <th>当前强化</th>
+            <th>职业限定</th>
+            <th>Fastidious 评级</th>
+            <th>官方 Wiki / Fastidious 真实技能效果</th>
+            <th>本号最佳穿戴与操作指令</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🔴 <strong>Spirit Siphon</strong> (灵魂虹吸)</td>
+            <td><strong>+8</strong> (冲+13)</td>
+            <td>🏹 射手</td>
+            <td><span class="tier tier-s">S Tier</span></td>
+            <td>连续攻击同一目标时，每次叠加 5%~10% 伤害（最高3层即 15%~30%），切换目标重置。</td>
+            <td>🔥 <strong>锁死给 6★ Hex！</strong> 强化结晶第一优先喂它到 +10/+13，中路点杀 Boss 神器。</td>
+          </tr>
+          <tr>
+            <td>🟡 <strong>Idril's Gaze</strong> (伊德莉尔的凝视)</td>
+            <td><strong>+8</strong> (冲+10)</td>
+            <td>🏹 射手</td>
+            <td><span class="tier tier-s">S Tier</span></td>
+            <td>暴击时有 50% 概率无视目标 20% $
+ightarrow$ 30% 防御力 (DEF)。</td>
+            <td>🔥 <strong>锁死给 6★ Idril（或 Hatssut）！</strong> Idril 专页排名第1的毕业神器，打高防怪破甲全靠它。</td>
+          </tr>
+          <tr>
+            <td>🟡 <strong>Shadow Gaze ×2</strong> (暗影凝视)</td>
+            <td><strong>+10 / +10</strong></td>
+            <td>🏹 射手</td>
+            <td><span class="tier tier-a">A/B Tier</span></td>
+            <td>每进行 5 次普通攻击，自身攻击力 (ATK) 提高 10%，持续 5 秒。</td>
+            <td>⚠️ <strong>千万别合掉！</strong> 2件分开穿：1件给 <strong>Hatssut</strong>，1件给 <strong>Maul</strong>，四人射手全员满配！</td>
+          </tr>
+          <tr>
+            <td>🟣 <strong>Keen Wisdom</strong> (敏锐智慧)</td>
+            <td><strong>+19</strong> (另+1)</td>
+            <td>🌐 通用</td>
+            <td><span class="tier tier-s">S Tier</span></td>
+            <td><strong>唯一排进 S 级的紫神器！</strong> 周围 1~2 格内有友军时，自身攻击力直接提高 8%~16%！</td>
+            <td>把 +1 那件合进 +19 主件里！给 <strong>Marri / Venoma</strong> 或需要堆攻击面板的英雄穿。</td>
+          </tr>
+          <tr>
+            <td>🔴 <strong>Regal Crest</strong> (皇室徽章)</td>
+            <td><strong>+1</strong> (可+10)</td>
+            <td>🛡️ 坦克</td>
+            <td><span class="tier tier-a">A Tier</span></td>
+            <td>受到的治疗效果 (Received Healing) 提高 20% $
+ightarrow$ 40%，且提供神话级高额血防白字。</td>
+            <td>给主坦 <strong>Baron</strong>（或 <strong>Olague</strong>）穿！直到以后刷出 SSS 级 <code>Bastion Ring</code> 再换。</td>
+          </tr>
+          <tr>
+            <td>🔴 <strong>Nightmare Shadow ×2</strong></td>
+            <td><strong>+1 / +1</strong></td>
+            <td>⚔️ 战士</td>
+            <td><span class="tier tier-c">C/D Tier</span></td>
+            <td>每5次普攻叠加 5%~10% 暴击率（最多3层即 +15%~30% 暴击）。</td>
+            <td>先不合，分给 <strong>Estrid</strong> 和 <strong>Veyrathia</strong> 穿，利用红色神话的高额白字面板开荒（别重仓强化）。</td>
+          </tr>
+          <tr>
+            <td>🔴 <strong>Rage Chain</strong> (怒气锁链)</td>
+            <td><strong>+1</strong></td>
+            <td>⚔️ 战士</td>
+            <td><span class="tier tier-d">D Tier</span></td>
+            <td>生命值每降低 1%，暴击伤害提高 0.3%~0.6%。</td>
+            <td>给第3战士过渡撑红神器白字面板，别投结晶强化。</td>
+          </tr>
+          <tr>
+            <td>🟡 <strong>The Watchguard's Ambition</strong><br>🟡 <strong>Voroth's Wrath</strong></td>
+            <td><strong>+1 / +1</strong></td>
+            <td>⚔️ 战士</td>
+            <td><span class="tier tier-b">B/C Tier</span></td>
+            <td>Ambition：普攻 10%~15% 概率连击1次；Voroth's Wrath：压血加暴击率。</td>
+            <td>⚠️ <strong>先留着别卖！</strong> 英雄之路后面有「同时给 8 名英雄穿戴金/红神器」的任务，留着凑数秒过任务！</td>
+          </tr>
+          <tr>
+            <td>🟡 <strong>The North's Glory</strong><br>🟡 <strong>The Watchguard's Fortune</strong></td>
+            <td><strong>+1 / +1</strong></td>
+            <td>💚 治疗</td>
+            <td><span class="tier tier-a">A Tier</span> / <span class="tier tier-f">F Tier</span></td>
+            <td>North's Glory：满血奶概率套最大生命20%护盾；Fortune：按暴击率触发额外治疗（F级）。</td>
+            <td><code>North's Glory</code> 给 <strong>Vortex / Ferssi</strong>；<code>Fortune</code> 给 <strong>Hollow</strong> 仅撑白字（绝不强化）。</td>
+          </tr>
+          <tr>
+            <td>🔴 <strong>Tidal Ring</strong> (潮汐之戒)</td>
+            <td><strong>+1</strong></td>
+            <td>🔮 法师</td>
+            <td><span class="tier tier-c">C Tier</span></td>
+            <td>伤害提高 10%~15%，攻击有 25%~50% 概率减速目标 50% 持续 2 秒。</td>
+            <td>给 <strong>Venoma / Marri</strong> 戴上白嫖 10% 增伤与高白字，低优先，<strong>别砸结晶强化</strong>。</td>
+          </tr>
+          <tr>
+            <td>🟡 <strong>Spirit of the Pack ×2</strong> (狼群之魂)</td>
+            <td><strong>+1</strong></td>
+            <td>🎯 战术大师</td>
+            <td><span class="tier tier-a">A Tier</span></td>
+            <td><strong>第6职业 Tactician 限定</strong>：伤害 +10%~20%，位移后额外 +5% 伤害持续10秒。</td>
+            <td>虽然目前无战术大师英雄，<strong>直接合星并锁死在仓库</strong>，留给未来的 Valara 等神卡。</td>
+          </tr>
+          <tr>
+            <td>🟣 <strong>Medal of Fortitude ×5</strong><br>🟣 <strong>Consuming Rage ×4</strong><br>🟣 <strong>Adamant Will ×3</strong><br>🟣 <strong>Warsong (+10)</strong></td>
+            <td>+1 / +10</td>
+            <td>🌐 通用</td>
+            <td><span class="tier tier-c">C</span> / <span class="tier tier-f">F Tier</span></td>
+            <td>除 Medal 为受击加防 (C级) 外，其余三件在 Fastidious 均排在 <strong>F Tier (垫底)</strong>。</td>
+            <td><code>Medal ×5</code> 合一给副坦过渡；<code>Consuming Rage / Adamant Will</code> <strong>直接拆解/卖出换强化结晶</strong>喂 Siphon 和 Gaze！</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 9. 副本进度 & 英雄之路 -->
+  <section id="sec-raids">
+    <div class="section-header">
+      <div class="section-title">🏰 九、 副本/Raids 推进路线 & 英雄之路 (Hero's Path) 14~18 关通关剧透</div>
+      <div class="section-sub">点击任务左侧方框可记录完成状态（自动保存在浏览器本地）</div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 16px;">
+      <div class="card">
+        <div class="card-title"><span>⚡ 近期必做推进清单 (Interactive Checklist)</span></div>
+        <div id="todo-list">
+          <label class="todo-item"><input type="checkbox" data-id="t1"><span><strong>主线 N9-7</strong>：通关以解锁 <strong>EXP Raid Stage 8</strong>（再开双倍刷狗粮）</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="t2"><span><strong>主线 H6-3</strong>：通关以解锁 <strong>Gold Raid Stage 5</strong></span></label>
+          <label class="todo-item"><input type="checkbox" data-id="t3"><span><strong>每日 Tide 3次打满</strong>：从 Wave 12 推进至 <strong>Wave 30</strong>（解锁英雄之路 #14）</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="t4"><span><strong>Olague 养成</strong>：升至 <strong>5★满级 + Promotion 5</strong>，进驻 Void Rift 序章下一阶段</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="t5"><span><strong>Ferssi 养成</strong>：升至 <strong>5★满级 + Promotion 5</strong>，编入 GR2 队伍</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="t6"><span><strong>Cave of Relics 试炼</strong>：刷 Promotion Melee 13 / Endurance Extreme 1 拿满里程碑即停</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="t7"><span><strong>Faction Trial Basic</strong>：从 Stage 6 顺手推到 Stage 7~8（不锁单一阵营）</span></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>🏆 英雄之路 (Hero's Path) 第 14 → 18 关拿 Volka 核心卡点剧透</span><span class="pill pill-gold">提前备货</span></div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">等你这几天攒够次数打通 <strong>第14步 (Clear Tide Wave 30)</strong> 后，后面 15~18 章会遇到以下硬指标任务，提前留好资源可一路秒过：</p>
+        <ul>
+          <li><strong>神器穿戴任务</strong>：<code>Equip 8 heroes each with 1 Legendary (Orange) or rarer Artifact</code>（让 8 个英雄同时每人戴 1 件金/红神器 —— 你手里现在正好有超过 8 件金/红神器，千万别把多余的金神器全卖了，戴满8人交完任务再处理！）。</li>
+          <li><strong>带“接到任务后 (After receiving this quest)”字样的穿装任务</strong>：要求给 2 名英雄穿 5 件橙/红装 —— 随便把 Hatssut 和 Hex 的装备脱下来再穿回去就能直接完成。</li>
+          <li><strong>全身强化任务</strong>：要求 2 名英雄全身 5 件装备达到 <code>+12</code>（你主力早已达标）。</li>
+          <li><strong>三大装备本阵容任务</strong>：带 2 法师通 <code>GR1-10+</code>、带 2 坦克通 <code>GR2-6+</code>、带 3 射手通 <code>GR3-6+</code>（全部白给）。做完 18 章直接免费领 <strong>5★ 传说战士 Volka (沃尔卡)</strong>！</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. 双Lord编队 & GR3攻略 -->
+  <section id="sec-teams">
+    <div class="section-header">
+      <div class="section-title">♟️ 十、 Team 1 / Team 2 双领主 (Lord) 编队机制 & GR3 16~18 站位攻略</div>
+      <div class="section-sub">彻底理清双队长槽与 Laurel 撤退循环</div>
+    </div>
+
+    <div class="callout callout-warn">
+      <strong>👑 核心机制：Team 1 和 Team 2 各有一个独立的 Lord 队长槽（不是全局只生效一个）！</strong><br>
+      • 编队界面分上下两行（Team 1 / Team 2），每一行最左侧都是带皇冠的 Lord 位。阵营属性加成只对<strong>「与该队 Lord 处在同一行且同阵营」</strong>的英雄生效；但 <strong>Venoma 的第三条领主技（全队首次部署直接 +30% 初始怒气）对全员生效</strong>！<br>
+      • <strong>当前设置 (Day 5~13)</strong>：Team 1 放 <strong>Venoma</strong>（把 <strong>Laurel</strong> 也放进 Team 1 吃秘术同阵营加成）；Team 2 如果上噩梦队（Hatssut / Baron / Veyrathia），可以把 <strong>Veyrathia</strong> 放在 Team 2 的皇冠位当队长（注意她有噩梦队友受治疗 -20% 的词条，Baron 戴 <code>Regal Crest +20%受治疗</code> 刚好抵消），等 Day 14 拿到 <strong>Wrath (愤怒)</strong> 后正式由 Wrath 接管 Team 2 队长位！
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span>🏹 GR3 (Stage 16 ~ 18) 破关标准作业程序</span><span class="pill pill-green">当前主战场</span></div>
+        <ul>
+          <li><strong>10人标准编队</strong>：<strong>Venoma (Lord)</strong> + <strong>Hatssut</strong> + <strong>Idril</strong> + <strong>Hex</strong> + <strong>Maul</strong> + <strong>Laurel (5★P5)</strong> + <strong>Hollow</strong> + <strong>Vortex</strong> + <strong>Dalyn (开局产Cost)</strong> + <strong>Baron (或Veyrathia堵门)</strong>。（<em>注：Kai 彻底踢出队伍 Skip！</em>）</li>
+          <li><strong>三路站位分工</strong>：
+            <ul>
+              <li><strong>中路高台</strong>：先下 <strong>Dalyn</strong> 产费 $
+ightarrow$ 下 <strong>Idril (穿全身最好ATK%装 + Idril's Gaze)</strong> 与 <strong>Hex (戴 Spirit Siphon 点杀巫女 Boss 与中路大怪)</strong> + <strong>Hollow</strong> 覆盖回怒。</li>
+              <li><strong>左路高台</strong>：下 <strong>Maul (A4，戴 Shadow Gaze)</strong> 朝左单守群怪波次。</li>
+              <li><strong>右路高台</strong>：下 <strong>Hatssut (戴 Shadow Gaze)</strong> 靠隐身与大招单秒右路刷出的飞怪群。</li>
+              <li><strong>Laurel 撤退充能循环</strong>：在中路高台预留 1 个空位，每当 Idril/Hex 大招快转好或刚放完时，把 <strong>Laurel</strong> 贴身放下 $
+ightarrow$ <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围所有人直接注入 <strong>+50% 怒气</strong>！</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>⚔️ GR1 / GR2 / Guild Boss 编队方案</span></div>
+        <ul>
+          <li><strong>GR1 (目前 Stage 13 3★ → 试探 14+)</strong>：
+            <ul>
+              <li>编队：<strong>Venoma (Lord)</strong> + <strong>Ai (冰晶群控)</strong> + <strong>Marri (A3全场减速冻结)</strong> + <strong>Hatssut / Hex / Idril</strong> + <strong>Estrid (地面隔墙群砍破甲)</strong> + <strong>Hollow + Laurel + Baron</strong>。等 Day 28 签到拿到 <strong>Greed</strong> 后再猛推高层。</li>
+            </ul>
+          </li>
+          <li><strong>GR2 (目前 Stage 12 3★ → Vault试炼刷12拿里程碑)</strong>：
+            <ul>
+              <li>随着你刚抽到 <strong>Ferssi (GR2 S级范围减伤奶)</strong>，组成 <strong>Baron + Olague + Vortex + Ferssi + Hollow + Hatssut/Hex</strong> 即可稳刷；等英雄之路拿到 <strong>Volka</strong> 后再冲击 18+。</li>
+            </ul>
+          </li>
+          <li><strong>Guild Boss (公会 Boss 日常打满拿最高箱)</strong>：
+            <ul>
+              <li><strong>Venoma + Hex (Spirit Siphon主力输出) + Hatssut + Idril + Estrid + Hollow + Laurel + Baron</strong>。</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. 神谕试炼 -->
+  <section id="sec-oracle">
+    <div class="section-header">
+      <div class="section-title">🏆 十一、 Oracle's Trial（神谕试炼）策略：连拿两场第 1 后的控分法则</div>
+      <div class="section-sub">Hero Conquest 第1名 ✅ · Arrival of Heroes 第1名 ✅</div>
+    </div>
+
+    <div class="card">
+      <p style="margin-bottom: 10px;">
+        <strong>⚠️ 隐藏分组机制警告</strong>：神谕试炼采用动态分组，拿过 Rank 1 的玩家后续会被分入更卷的分组。你已经圆满拿下含金量极高的 <strong>Hero Conquest 榜一</strong> 和 <strong>Arrival of Heroes 榜一（10-26 15:30 发放 1传说技能晶 + 3红晶 + 5 Darkfall Gem）</strong>！
+      </p>
+      <ul>
+        <li><strong>当前进行中 (Cave of Relics & Vault in the Sands)</strong>：<strong>只拿满里程碑奖励即停手，绝不硬追排名！</strong> Cave 刷你刚需的 Baron/奶妈晋级徽章；Vault 自动挂机刷稳过 3★ 的 GR2-12 拿完里程碑分就回推主线和刷 GR3-15。</li>
+        <li><strong>Darkfall Gem (暗陨宝石 ×5) 用途</strong>：用于强化 <strong>+16 红色神话装备 (Mythic Gear)</strong> 的词条数值，目前存仓锁好，等打通 GR18+ 出极品古神装再用。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 12. 商店/资源/隐藏成就 -->
+  <section id="sec-shop">
+    <div class="section-header">
+      <div class="section-title">🛒 十二、 商店购买铁律 & Fastidious 2分钟白嫖隐藏成就</div>
+      <div class="section-sub">每一分红钻与金币都花在刀刃上</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span>🏪 各大商店必买与禁区清单</span></div>
+        <ul>
+          <li><strong>矮人黑市 (Dwarven Store)</strong>：
+            <ul>
+              <li><strong>金币必买</strong>：所有金币卖的晋级徽章、自动战斗次数、1~2★狗粮全收。</li>
+              <li><strong>红钻唯一用途</strong>：<strong>只买打折的「蓝水晶 (Rare Summoning Crystal)」</strong>（买来只囤不抽，备战悟空池）！后期开了神话装线再买打折大体力药。<strong>红钻绝不买原价商品、徽章、自动券！</strong></li>
+            </ul>
+          </li>
+          <li><strong>公会商店 (Guild Shop)</strong>：每周必清空 <strong>传说技能结晶 (Legendary Skill Crystal)</strong> $
+ightarrow$ 神话神器精华 $
+ightarrow$ 红晶/蓝晶。</li>
+          <li><strong>竞技场商店 (Arena Shop)</strong>：每日买体力、自动券、蓝晶；攒币换技能结晶与红晶。</li>
+          <li><strong>好友商店</strong>：每天互送好友点，全部换 <strong>体力 (Stamina)</strong>！</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>🎁 Fastidious.gg 隐藏成就 (Secret Achievements) 顺手白嫖</span><span class="pill pill-gold">免费领钻</span></div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">游戏内不显示条件，做完直接弹窗领红钻/奖励：</p>
+        <div id="secret-list">
+          <label class="todo-item"><input type="checkbox" data-id="s1"><span><strong>Window Shopper</strong>：打开矮人黑市商店，什么都不买，停留在界面挂机发呆 <strong>2 分钟</strong>。</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="s2"><span><strong>Cheers!</strong>：在矮人黑市界面，用手指连续点击矮人老板 <strong>Borut 100 下</strong>。</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="s3"><span><strong>Listener</strong>：在主城营地 (Camp) 点击站着的英雄触发对话累计 <strong>100 次</strong>。</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="s4"><span><strong>Diplomat</strong>：在世界聊天窗口，切换 <strong>5 个不同语言频道</strong> 各发一句话。</span></label>
+          <label class="todo-item"><input type="checkbox" data-id="s5"><span><strong>Tapped Out</strong>：强化装备把身上的金币花到 <strong>低于 1,000 金币</strong>（顺手触发破产安慰奖）。</span></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. 别踩坑 -->
+  <section id="sec-pitfalls">
+    <div class="section-header">
+      <div class="section-title">🚫 十三、 绝对别踩的 12 条死坑（红线备忘录）</div>
+      <div class="section-sub">守住纪律 = 超过 90% 同级玩家</div>
+    </div>
+
+    <div class="callout callout-danger" style="margin-bottom:0;">
+      <ol style="padding-left: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 6px 24px;">
+        <li><strong>绝不在 10-30 悟空池开启前乱抽哪怕 1 颗蓝水晶</strong>（守住 175 Pity 进悟空池兑现 ×20 传说）。</li>
+        <li><strong>绝不在无加成的常驻池抽那 10 张金水晶</strong>（Pity=9 差3进软保，留给 ×2 Divine 或顶级 Special Divine）。</li>
+        <li><strong>绝不把 Laurel 升上 6★</strong>（5★P5 已是完全体，升6★纯浪费5个5★狗粮和236万经验）。</li>
+        <li><strong>绝不给 Kai 喂传说技能石或升 6★</strong>（GR3 有 Hatssut+Hex+Idril+Maul 已完全够用，Kai 彻底仓管）。</li>
+        <li><strong>绝不把 Veyrathia 当狗粮喂掉，也别给她喂传说技能石</strong>（保持 5★P5 过渡，等 Day 14 Wrath 接班）。</li>
+        <li><strong>绝不把那两件 <code>Shadow Gaze (+10)</code> 合成一件</strong>（Hatssut 和 Maul 一人一件收益远大于合星）。</li>
+        <li><strong>绝不重仓强化 <code>Tidal Ring</code>、<code>Rage Chain</code> 或 <code>The Watchguard's Fortune</code></strong>（留着撑白字和凑 8 件金/红神器任务即可）。</li>
+        <li><strong>绝不在现阶段开启 Auto-Equip 或导入 Fastidious Endgame 过滤码</strong>（会卖光你的开荒散件）。</li>
+        <li><strong>绝不用红钻买黑市里的徽章/自动战斗券，或买商城直购大礼包</strong>（红钻只买黑市打折蓝水晶，氪金只续月卡）。</li>
+        <li><strong>绝不以为全局只有 1 个 Lord 位</strong>（Team 1 和 Team 2 各有独立队长槽，合理分行吃满双光环）。</li>
+        <li><strong>绝不在解锁 N9-7 (EXP8) 和 H6-3 (Gold5) 之前猛刷低层经验金币本</strong>（先推通主线节点再开双倍刷）。</li>
+        <li><strong>绝不为尚未开放的 Immortal Codex (15天后) 或单一阵营试炼强行拆散主力队资源</strong>。</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Roster Role Filter
+  function filterRoster(role, btn) {
+    document.querySelectorAll('.filter-bar .btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const rows = document.querySelectorAll('#roster-table tbody tr');
+    rows.forEach(row => {
+      if (role === 'all' || row.getAttribute('data-role') === role) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // Copy Gear Code
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('已复制导入码: ' + text);
+    });
+  }
+
+  // Persistent Checklists via localStorage
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][data-id]');
+  checkboxes.forEach(cb => {
+    const id = 'wor_todo_' + cb.getAttribute('data-id');
+    if (localStorage.getItem(id) === 'true') {
+      cb.checked = true;
+      cb.closest('.todo-item').classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      localStorage.setItem(id, cb.checked);
+      cb.closest('.todo-item').classList.toggle('done', cb.checked);
+    });
+  });
+
+  function resetChecklists() {
+    checkboxes.forEach(cb => {
+      const id = 'wor_todo_' + cb.getAttribute('data-id');
+      localStorage.removeItem(id);
+      cb.checked = false;
+      cb.closest('.todo-item').classList.remove('done');
+    });
+  }
+</script>
+</body>
+</html>
