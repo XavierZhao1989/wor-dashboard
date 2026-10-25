@@ -371,6 +371,49 @@
     color: var(--text-muted);
   }
 
+  .unverified {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.16);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    white-space: nowrap;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+
+  .unverified-note {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin: 0 0 10px;
+  }
+
+  .filter-note {
+    margin-top: 12px;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+  }
+
+  .site-footer {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
   @media (max-width: 900px) {
     .sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
     body { flex-direction: column; }
@@ -398,7 +441,7 @@
   <a class="nav-link" href="#sec-wishlist">🌟 Fastidious 愿望单 & BP秘密</a>
 
   <div class="nav-group-title">装备与神器 (Fastidious校验)</div>
-  <a class="nav-link" href="#sec-gear">🛡️ 装备 Manage Plan & 导入码</a>
+  <a class="nav-link" href="#sec-gear">🛡️ 装备 Manage Plan（四规则）</a>
   <a class="nav-link" href="#sec-artifacts">🏺 神器库存 & 真实评级修正 <span class="nav-badge">已纠偏</span></a>
 
   <div class="nav-group-title">副本、编队与运营</div>
@@ -473,9 +516,7 @@
         </div>
         <ul>
           <li><strong>三大 6★P6 射手已就位</strong>：<strong>Hatssut (6★P6 A1)</strong>、<strong>Hex (6★P6 A1)</strong>、<strong>Idril (6★P6 A1)</strong> 已经全部毕业！</li>
-          <li><strong>下一批 6★ 顺序</strong>：优先 <strong>Baron (已满觉 A5)</strong> $
-ightarrow$ <strong>Hollow / Vortex / Ferssi</strong> $
-ightarrow$ <strong>Olague</strong> 接在后面。</li>
+          <li><strong>下一批 6★ 顺序</strong>：优先 <strong>Baron (已满觉 A5)</strong> → <strong>Hollow / Vortex / Ferssi</strong> → <strong>Olague</strong> 接在后面。</li>
           <li><strong>为什么 Olague 暂缓 6★？</strong> 升1个6★需约 236 万 EXP + 5个5★狗粮。Olague 刚拿（4★），先拉到 <strong>5★满级 + P5</strong> 即可稳扛 Void Rift 和主线；<strong>Laurel 已 5★P5 星级毕业，永远不要升 6★！</strong></li>
         </ul>
       </div>
@@ -714,24 +755,27 @@ ightarrow$ <strong>Olague</strong> 接在后面。</li>
       <div class="card">
         <div class="card-title"><span>🔥 传说/史诗技能结晶 & 升星序列</span><span class="pill pill-gold">资源分配</span></div>
         <ul>
-          <li><strong>传说技能结晶 (Legendary Skill Crystal)</strong>：每周公会店必买！第1顺位喂满 <strong>Hatssut</strong> $
-ightarrow$ 第2顺位喂 <strong>Hex</strong> $
-ightarrow$ 第3顺位留给即将抽的 <strong>孙悟空 / Elowyn</strong>（<strong>Ferssi</strong> 和 <strong>Venoma</strong> 先不抢传说技能晶，靠基础技能等级即可工作）。</li>
+          <li><strong>传说技能结晶 (Legendary Skill Crystal)</strong>：每周公会店必买！第1顺位喂满 <strong>Hatssut</strong> → 第2顺位喂 <strong>Hex</strong> → 第3顺位留给即将抽的 <strong>孙悟空 / Elowyn</strong>（<strong>Ferssi</strong> 和 <strong>Venoma</strong> 先不抢传说技能晶，靠基础技能等级即可工作）。</li>
           <li><strong>史诗技能结晶 (Epic Skill Crystal)</strong>：优先喂满 <strong>Idril、Hollow、Vortex、Baron、Estrid、Marri</strong>；<strong>Veyrathia</strong> 停在 P5 过渡即可，不砸稀缺资源。</li>
           <li><strong>Ferssi (新抽到的5★传说奶) 定位</strong>：Fastidious 综合 <strong>A+ 级（GR2 高达 S 级，GB2 A+）</strong>！核心神技是给周围队友提供高额<strong>范围伤害减免 (AoE DMG Reduction)</strong> 与激励，立刻拉到 <strong>5★满级 + P5</strong> 进驻 GR2 和高难本！</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="card-title"><span>🏪 Fastidious.gg 觉醒商店 (Awakening Shop) 必买日历</span><span class="pill pill-purple">每周一刷新</span></div>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">商店按固定 24 周周期循环（史诗魂石 400 紫币，传说魂石 400 金币）：</p>
+        <div class="card-title">
+          <span>🏪 Fastidious.gg 觉醒商店 (Awakening Shop) 必买日历</span>
+          <span style="display:inline-flex; gap:6px; align-items:center; flex-shrink:0;">
+            <span class="unverified">⚠️ 未核实</span>
+            <span class="pill pill-purple">每周一刷新</span>
+          </span>
+        </div>
+        <p class="unverified-note">24 周轮换的具体日期未经核实，以游戏内觉醒商店当周实际上架为准。</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">下列排期是一份未核实的 24 周周期转述（史诗魂石 400 紫币，传说魂石 400 金币）：</p>
         <ul>
           <li><strong>本周 (10-19 ~ 10-25)</strong>：正在售卖 <code>Baron</code>（你 Baron 已经 A5 满觉，直接省下 400 紫币！）。</li>
           <li>🔥 <strong>4周后 (11月16日当周)</strong>：同时刷新 <strong><code>Idril (400紫币)</code> + <code>Laurel (400紫币)</code></strong>！务必留好紫币买 Idril 冲 A3/A5！</li>
           <li>🔥 <strong>5周后 (11月23日当周)</strong>：同时刷新 <strong><code>Hex (400金币)</code> + <code>Olague (400紫币)</code></strong>！</li>
-          <li><strong>9~11周后 (12月下旬~1月初)</strong>：依次刷新 <code>Marri</code> (12-21) $
-ightarrow$ <code>Maul</code> (12-28，你已A4差1满觉) $
-ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
+          <li><strong>9~11周后 (12月下旬~1月初)</strong>：依次刷新 <code>Marri</code> (12-21) → <code>Maul</code> (12-28，你已A4差1满觉) → <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
         </ul>
       </div>
     </div>
@@ -757,8 +801,9 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
       </div>
 
       <div class="card">
-        <div class="card-title"><span>🧮 Fastidious 逆向工程：如何快速拉高 BP 碾压 Tide Wave 30？</span><span class="pill pill-cyan" style="background:rgba(6,182,212,0.15);color:#06b6d4;">硬核机制</span></div>
-        <p style="font-size:0.83rem; margin-bottom:8px;">你当前英雄之路第14关被 <strong>Tide Wave 30</strong> 卡住，而 Tide 胜负高度取决于全队面板总 BP！Fastidious 拆解 748 个英雄得出的 <strong>BP 暴涨公式</strong>：</p>
+        <div class="card-title"><span>🧮 Fastidious 逆向工程：如何快速拉高 BP 碾压 Tide Wave 30？</span><span class="unverified">⚠️ 未核实</span></div>
+        <p class="unverified-note">下列数字没有已确认来源：748 个英雄、P6 <code>+6.050</code>、升 6★ <code>+2.100</code>、脆皮 DEF 约 4 倍 BP 权重，以及「Tide 主要由总 BP 决定」。Tide 胜负主要取决于阵容与站位。</p>
+        <p style="font-size:0.83rem; margin-bottom:8px;">你当前英雄之路第14关被 <strong>Tide Wave 30</strong> 卡住。下面是未经核实的转述，称 Fastidious 拆解 748 个英雄得出这套 <strong>BP 暴涨公式</strong>：</p>
         <ul>
           <li><strong>1. 紫星晋级 (Promotion) 权重是升星的 3 倍</strong>：在 BP 公式 <code>(基础+装备)×技能乘区</code> 中，点满 P6 提供高达 <code>+6.050</code> 的乘区加成（而升6★仅 <code>+2.100</code>）！把上阵英雄的 Promotion 刷满是涨 BP 最快手段。</li>
           <li><strong>2. 脆皮职业穿防御装加 4 倍虚胖 BP</strong>：射手/法师/奶妈的防御力 (DEF) 战力权重是坦克的 4 倍以上。打 Tide 那几分钟，给替补英雄塞满高强化紫/红装和神器，打完再扒下来！</li>
@@ -771,13 +816,13 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
   <!-- 7. 装备 Manage Plan -->
   <section id="sec-gear">
     <div class="section-header">
-      <div class="section-title">🛡️ 七、 装备 Manage Plan（Gemini 四规则 + Fastidious 官方配装与导入码）</div>
+      <div class="section-title">🛡️ 七、 装备 Manage Plan（Gemini 四规则 + Fastidious 开荒配装）</div>
       <div class="section-sub">保留全部极品散件，杜绝误卖</div>
     </div>
 
     <div class="callout callout-success">
       <strong>✅ 结论：你目前已设好的 4 条自定义规则（Set=ALL，Essential留空，关闭Auto-Equip）完全正确，继续保持！</strong><br>
-      同时记住：<strong>Ancient（带红/金闪光边框的远古装备，如你那件 +12 双紫条 +66攻速/+25.5%回怒 的 Mana Spring 奶妈装）</strong> 在自动战斗卖装时受系统底层保护不会被卖，进包后顺手点上 <strong>🔒 小锁头</strong> 即可。
+      同时记住：有一种未经核实的说法认为 <strong>Ancient（带红/金闪光边框的远古装备，如你那件 +12 双紫条 +66攻速/+25.5%回怒 的 Mana Spring 奶妈装）</strong> 在自动战斗卖装时受系统底层保护不会被卖 <span class="unverified">⚠️ 未核实</span>。进包后仍请顺手点上 <strong>🔒 小锁头</strong>。
     </div>
 
     <div class="table-wrap" style="margin-bottom: 16px;">
@@ -824,35 +869,15 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
       </table>
     </div>
 
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-title"><span>📐 Fastidious Stage 1 (开荒期) 权威配装细节</span></div>
-        <ul>
-          <li><strong>主力输出 (Hatssut / Hex / Idril / Maul / Estrid)</strong>：Fastidious 推荐开荒期右三件主属性优先穿 <strong>3 件 <code>ATK Bonus %</code></strong>（靠副词条凑暴击率和攻速；若副词条暴击太低再穿 1 件暴击率主属性）。</li>
-          <li><strong>副词条真实收益排序</strong>：在 Stage 1 开荒期，<code>ATK SPD</code> &gt; <code>Crit. Rate %</code> &gt; <strong><code>Flat ATK (固定攻击)</code></strong> &gt; <code>Crit. DMG %</code>！因为前期跨过怪物防御门槛第一重要，歪出固定攻击力完全可用！</li>
-          <li><strong>Hollow (攻击奶) 配装提醒</strong>：不要长期只穿纯 R-SPD 主属性，右三件采用 <strong><code>ATK%</code> + <code>ATK%</code> + 你那件 <code>+66攻速远古装</code></strong>，兼顾奶量与机关枪回怒。</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><span>📋 Fastidious.gg 官方导入码 (备存至 GR18+ 使用)</span></div>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;">注意：<strong>现阶段不要启用 Endgame 码</strong>（会卖掉你的过渡红装），保存在此供你通关 GR3-18 后一键导入新方案参考：</p>
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <div>
-            <span style="font-size:0.82rem; margin-right:8px;">中后期过滤码 (Mid/Late)：</span>
-            <span class="code-box">ODMyMTg= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMTg=')">复制</button></span>
-          </div>
-          <div>
-            <span style="font-size:0.82rem; margin-right:8px;">大后期过滤码 (Late/End)：</span>
-            <span class="code-box">ODMyMjA= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMjA=')">复制</button></span>
-          </div>
-          <div>
-            <span style="font-size:0.82rem; margin-right:8px;">Fasti 个人终极码 (Endgame)：</span>
-            <span class="code-box">ODMyMjM= <button class="btn" style="padding:2px 8px; font-size:0.72rem;" onclick="copyText('ODMyMjM=')">复制</button></span>
-          </div>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-title"><span>📐 Fastidious Stage 1 (开荒期) 权威配装细节</span></div>
+      <ul>
+        <li><strong>主力输出 (Hatssut / Hex / Idril / Maul / Estrid)</strong>：Fastidious 推荐开荒期右三件主属性优先穿 <strong>3 件 <code>ATK Bonus %</code></strong>（靠副词条凑暴击率和攻速；若副词条暴击太低再穿 1 件暴击率主属性）。</li>
+        <li><strong>副词条真实收益排序</strong>：在 Stage 1 开荒期，<code>ATK SPD</code> &gt; <code>Crit. Rate %</code> &gt; <strong><code>Flat ATK (固定攻击)</code></strong> &gt; <code>Crit. DMG %</code>！因为前期跨过怪物防御门槛第一重要，歪出固定攻击力完全可用！</li>
+        <li><strong>Hollow (攻击奶) 配装提醒</strong>：不要长期只穿纯 R-SPD 主属性，右三件采用 <strong><code>ATK%</code> + <code>ATK%</code> + 你那件 <code>+66攻速远古装</code></strong>，兼顾奶量与机关枪回怒。</li>
+      </ul>
     </div>
+    <p class="filter-note">不使用 Fastidious 过滤码，只保留上面 4 条自定义 Manage Plan 规则（R-TANK / R-SPD / R-DPS / L-All）。</p>
   </section>
 
   <!-- 8. 神器库存 & 真实评级修正 -->
@@ -888,8 +913,7 @@ ightarrow$ <code>Vortex</code> & <code>Silas</code> (01-04)。</li>
             <td><strong>+8</strong> (冲+10)</td>
             <td>🏹 射手</td>
             <td><span class="tier tier-s">S Tier</span></td>
-            <td>暴击时有 50% 概率无视目标 20% $
-ightarrow$ 30% 防御力 (DEF)。</td>
+            <td>暴击时有 50% 概率无视目标 20% → 30% 防御力 (DEF)。</td>
             <td>🔥 <strong>锁死给 6★ Idril（或 Hatssut）！</strong> Idril 专页排名第1的毕业神器，打高防怪破甲全靠它。</td>
           </tr>
           <tr>
@@ -913,8 +937,7 @@ ightarrow$ 30% 防御力 (DEF)。</td>
             <td><strong>+1</strong> (可+10)</td>
             <td>🛡️ 坦克</td>
             <td><span class="tier tier-a">A Tier</span></td>
-            <td>受到的治疗效果 (Received Healing) 提高 20% $
-ightarrow$ 40%，且提供神话级高额血防白字。</td>
+            <td>受到的治疗效果 (Received Healing) 提高 20% → 40%，且提供神话级高额血防白字。</td>
             <td>给主坦 <strong>Baron</strong>（或 <strong>Olague</strong>）穿！直到以后刷出 SSS 级 <code>Bastion Ring</code> 再换。</td>
           </tr>
           <tr>
@@ -1032,12 +1055,10 @@ ightarrow$ 40%，且提供神话级高额血防白字。</td>
           <li><strong>10人标准编队</strong>：<strong>Venoma (Lord)</strong> + <strong>Hatssut</strong> + <strong>Idril</strong> + <strong>Hex</strong> + <strong>Maul</strong> + <strong>Laurel (5★P5)</strong> + <strong>Hollow</strong> + <strong>Vortex</strong> + <strong>Dalyn (开局产Cost)</strong> + <strong>Baron (或Veyrathia堵门)</strong>。（<em>注：Kai 彻底踢出队伍 Skip！</em>）</li>
           <li><strong>三路站位分工</strong>：
             <ul>
-              <li><strong>中路高台</strong>：先下 <strong>Dalyn</strong> 产费 $
-ightarrow$ 下 <strong>Idril (穿全身最好ATK%装 + Idril's Gaze)</strong> 与 <strong>Hex (戴 Spirit Siphon 点杀巫女 Boss 与中路大怪)</strong> + <strong>Hollow</strong> 覆盖回怒。</li>
+              <li><strong>中路高台</strong>：先下 <strong>Dalyn</strong> 产费 → 下 <strong>Idril (穿全身最好ATK%装 + Idril's Gaze)</strong> 与 <strong>Hex (戴 Spirit Siphon 点杀巫女 Boss 与中路大怪)</strong> + <strong>Hollow</strong> 覆盖回怒。</li>
               <li><strong>左路高台</strong>：下 <strong>Maul (A4，戴 Shadow Gaze)</strong> 朝左单守群怪波次。</li>
               <li><strong>右路高台</strong>：下 <strong>Hatssut (戴 Shadow Gaze)</strong> 靠隐身与大招单秒右路刷出的飞怪群。</li>
-              <li><strong>Laurel 撤退充能循环</strong>：在中路高台预留 1 个空位，每当 Idril/Hex 大招快转好或刚放完时，把 <strong>Laurel</strong> 贴身放下 $
-ightarrow$ <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围所有人直接注入 <strong>+50% 怒气</strong>！</li>
+              <li><strong>Laurel 撤退充能循环</strong>：在中路高台预留 1 个空位，每当 Idril/Hex 大招快转好或刚放完时，把 <strong>Laurel</strong> 贴身放下 → <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围所有人直接注入 <strong>+50% 怒气</strong>！</li>
             </ul>
           </li>
         </ul>
@@ -1101,17 +1122,22 @@ ightarrow$ <strong>1秒后立刻点击撤退 (Recall)</strong>，瞬间给周围
               <li><strong>红钻唯一用途</strong>：<strong>只买打折的「蓝水晶 (Rare Summoning Crystal)」</strong>（买来只囤不抽，备战悟空池）！后期开了神话装线再买打折大体力药。<strong>红钻绝不买原价商品、徽章、自动券！</strong></li>
             </ul>
           </li>
-          <li><strong>公会商店 (Guild Shop)</strong>：每周必清空 <strong>传说技能结晶 (Legendary Skill Crystal)</strong> $
-ightarrow$ 神话神器精华 $
-ightarrow$ 红晶/蓝晶。</li>
+          <li><strong>公会商店 (Guild Shop)</strong>：每周必清空 <strong>传说技能结晶 (Legendary Skill Crystal)</strong> → 神话神器精华 → 红晶/蓝晶。</li>
           <li><strong>竞技场商店 (Arena Shop)</strong>：每日买体力、自动券、蓝晶；攒币换技能结晶与红晶。</li>
           <li><strong>好友商店</strong>：每天互送好友点，全部换 <strong>体力 (Stamina)</strong>！</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="card-title"><span>🎁 Fastidious.gg 隐藏成就 (Secret Achievements) 顺手白嫖</span><span class="pill pill-gold">免费领钻</span></div>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">游戏内不显示条件，做完直接弹窗领红钻/奖励：</p>
+        <div class="card-title">
+          <span>🎁 Fastidious.gg 隐藏成就 (Secret Achievements) 顺手白嫖</span>
+          <span style="display:inline-flex; gap:6px; align-items:center; flex-shrink:0;">
+            <span class="unverified">⚠️ 未核实</span>
+            <span class="pill pill-gold">免费领钻</span>
+          </span>
+        </div>
+        <p class="unverified-note">成就条件未经核实。Borut 是 3★ 英雄，不一定是商店里的矮人。</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">下列为未核实转述（游戏内不显示条件，据说做完会弹窗领奖励）：</p>
         <div id="secret-list">
           <label class="todo-item"><input type="checkbox" data-id="s1"><span><strong>Window Shopper</strong>：打开矮人黑市商店，什么都不买，停留在界面挂机发呆 <strong>2 分钟</strong>。</span></label>
           <label class="todo-item"><input type="checkbox" data-id="s2"><span><strong>Cheers!</strong>：在矮人黑市界面，用手指连续点击矮人老板 <strong>Borut 100 下</strong>。</span></label>
@@ -1139,7 +1165,7 @@ ightarrow$ 红晶/蓝晶。</li>
         <li><strong>绝不把 Veyrathia 当狗粮喂掉，也别给她喂传说技能石</strong>（保持 5★P5 过渡，等 Day 14 Wrath 接班）。</li>
         <li><strong>绝不把那两件 <code>Shadow Gaze (+10)</code> 合成一件</strong>（Hatssut 和 Maul 一人一件收益远大于合星）。</li>
         <li><strong>绝不重仓强化 <code>Tidal Ring</code>、<code>Rage Chain</code> 或 <code>The Watchguard's Fortune</code></strong>（留着撑白字和凑 8 件金/红神器任务即可）。</li>
-        <li><strong>绝不在现阶段开启 Auto-Equip 或导入 Fastidious Endgame 过滤码</strong>（会卖光你的开荒散件）。</li>
+        <li><strong>绝不在现阶段开启 Auto-Equip</strong>（会卖光你的开荒散件）。</li>
         <li><strong>绝不用红钻买黑市里的徽章/自动战斗券，或买商城直购大礼包</strong>（红钻只买黑市打折蓝水晶，氪金只续月卡）。</li>
         <li><strong>绝不以为全局只有 1 个 Lord 位</strong>（Team 1 和 Team 2 各有独立队长槽，合理分行吃满双光环）。</li>
         <li><strong>绝不在解锁 N9-7 (EXP8) 和 H6-3 (Gold5) 之前猛刷低层经验金币本</strong>（先推通主线节点再开双倍刷）。</li>
@@ -1147,6 +1173,8 @@ ightarrow$ 红晶/蓝晶。</li>
       </ol>
     </div>
   </section>
+
+  <footer class="site-footer">数据源优先级：游戏内 &gt; Fastidious.gg &gt; Wiki（Fandom，稀有度/梯队可能过时）· 最后更新 2026-10-25</footer>
 
 </main>
 
@@ -1162,13 +1190,6 @@ ightarrow$ 红晶/蓝晶。</li>
       } else {
         row.style.display = 'none';
       }
-    });
-  }
-
-  // Copy Gear Code
-  function copyText(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('已复制导入码: ' + text);
     });
   }
 
