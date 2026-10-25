@@ -492,15 +492,20 @@
   .stars {
     display: inline-flex;
     align-items: center;
-    gap: 1px;
-    margin: 0 3px 0 1px;
-    vertical-align: middle;
+    gap: 3px;
+    margin: 0 6px 0 3px;
+    vertical-align: -1px;
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 
   .stars img {
-    width: 12px;
-    height: 10px;
+    width: 16px;
+    height: 14px;
     display: block;
+    flex: 0 0 auto;
+    object-fit: cover;
+    filter: drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000);
   }
 
   .sr-only {
@@ -534,7 +539,7 @@
     .main-content { margin-left: 0; padding: 18px; }
     .hero-ava { width: 28px; height: 28px; }
     .hero-slot { width: 28px; height: 28px; flex-basis: 28px; }
-    .stars img { width: 11px; height: 9px; }
+    .stars img { width: 14px; height: 12px; }
   }
 </style>
 </head>
