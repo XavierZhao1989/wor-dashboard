@@ -1,0 +1,17 @@
+/* WoR rarity frame — 仿 fastidious.gg hero-micro-card */
+:root{--gold:#f2ca50;--gold-dark:#d4af37;--mystic:#f9abff;--mystic-dark:#86039c;--arcane:#50e0f9;--arcane-dark:#20c4dc;--surface-high:#2a2724}
+.hero{position:relative;width:90px;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:rgb(42 39 36/.6)}
+.hero>.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.1)}
+.hero>.face{position:relative;width:100%;height:100%;object-fit:cover}
+/* ring + gradient fallback (无背景图时也成立) */
+.r-legendary{box-shadow:0 0 0 2px rgb(242 202 80/.5);background-image:linear-gradient(to bottom,rgb(242 202 80/.2),rgb(212 175 55/.1),transparent)}
+.r-epic{box-shadow:0 0 0 2px rgb(249 171 255/.5);background-image:linear-gradient(to bottom,rgb(249 171 255/.2),rgb(134 3 156/.1),transparent)}
+.r-rare{box-shadow:0 0 0 2px rgb(80 224 249/.5);background-image:linear-gradient(to bottom,rgb(80 224 249/.2),rgb(32 196 220/.1),transparent)}
+.r-uncommon{box-shadow:0 0 0 2px rgb(34 197 94/.5);background-image:linear-gradient(to bottom,rgb(34 197 94/.2),rgb(20 83 45/.1),transparent)}
+.r-common{box-shadow:0 0 0 2px rgb(156 163 175/.5);background-image:linear-gradient(to bottom,rgb(156 163 175/.2),rgb(75 85 99/.1),transparent)}
+.r-mythic{box-shadow:0 0 0 2px rgb(239 68 68/.5);background-image:linear-gradient(to bottom,rgb(239 68 68/.2),rgb(127 29 29/.1),transparent)}
+/* 带图版: <div class="hero r-epic"><img class="bg" src="frames/epic-card.webp"><img class="face" src="..."></div> */
+/* 游戏数据色(文字/徽章用): */
+.c-common{color:#bebebe}.c-uncommon{color:#06811F}.c-rare{color:#8a92dd}.c-epic{color:#c488cd}.c-legendary{color:#C0A357}.c-mythic{color:#ff0000}
+/* 觉醒徽章: a1-2 slate, a3-4 amber, a5 gold */
+.aw{font:700 10px/1 sans-serif;padding:2px 4px;border-radius:4px}.aw1,.aw2{background:#64748b;color:#fff}.aw3,.aw4{background:#f59e0b;color:#1a1a1a}.aw5{background:var(--gold);color:#1a1a1a}
